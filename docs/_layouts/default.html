@@ -12,6 +12,20 @@
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="{{ site.url }}" />
+	<meta property="og:title" content="{{ site.title }}" />
+	<meta property="og:description" content="{{ site.description }}" />
+	<meta property="og:image" content="{{ site.preview }}" />
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="{{ site.intro }}" />
+	<meta property="twitter:url" content="{{ site.url }}" />
+	<meta property="twitter:title" content="{{ site.title }}" />
+	<meta property="twitter:description" content="{{ site.description }}" />
+	<meta property="twitter:image" content="{{ site.preview }}" />
+
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
@@ -72,8 +86,8 @@
         <!-- Slide 1 -->
         <div class="carousel-item active">
           <div class="carousel-container">
-            <h2 class="animate__animated animate__fadeInDown">Trento ci fa stare <span>bene!!!</span></h2>
-            <p class="animate__animated animate__fadeInUp">Lista civica a sostegno del candidato sindaco Franco Ianeselli</p>
+            <h2 class="animate__animated animate__fadeInDown">{{ site.title }}</h2>
+            <p class="animate__animated animate__fadeInUp">{{ site.subtile }}</p>
             <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">scopri di più</a>
           </div>
         </div>
@@ -139,7 +153,7 @@
       <img src="assets/img/poster.jpg" class="img-fluid" alt="Poster"/>
     </div>
 
-    <div class="col-lg-12 content text-center" data-aos="fade-up" data-aos-delay="100">
+    <div class="col-lg-12 content text-left" data-aos="fade-up" data-aos-delay="100">
       <p>
         20 donne e 20 uomini, che hanno deciso di mettersi "Insieme per Trento" perché hanno a cuore la nostra città, la nostra montagna, i sobborghi e le periferie, la collina.<br/>
         Una lista che ben rappresenta la ricchezza della nostra comunità. Diverse voci, diverse storie, diversi ambiti lavorativi e competenze ma tutti con la stessa grinta e passione, a disposizione di Trento. 
@@ -392,22 +406,17 @@
       <h3 class="sitename">Insieme per Trento</h3>
       <p>Lista civica a sostegno del candidato sindaco Franco Ianeselli per il comune di Trento</p>
       <div class="social-links d-flex justify-content-center">
-        <a href=""><i class="bi bi-twitter-x"></i></a>
-        <a href=""><i class="bi bi-facebook"></i></a>
-        <a href=""><i class="bi bi-instagram"></i></a>
-        <a href=""><i class="bi bi-skype"></i></a>
-        <a href=""><i class="bi bi-linkedin"></i></a>
+        <a href="https://www.facebook.com/{{ site.facebook}}"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.instagram.com/{{ site.instagram}}"><i class="bi bi-instagram"></i></a>
       </div>
       <div class="container">
         <div class="copyright">
-          <span>Contenuti rilasciati</span> <strong class="px-1 sitename">CC-BY 4.0</strong> <span>Web development @napo</span>
+          <span>associazione politica "Ianeselli Sindaco - Insieme per Trento", Largo Carducci 45, 38122 Trento, P.IVA 96124270222</span>
+          <br/>
+          <span>Contenuti rilasciati in <strong class="px-1 sitename">CC-BY 4.0</strong></span>
         </div>
         <div class="credits">
-          <!-- All the links in the footer should remain intact. -->
-          <!-- You can delete the links only if you've purchased the pro version. -->
-          <!-- Licensing information: https://bootstrapmade.com/license/ -->
-          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          <small>Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></small>
         </div>
       </div>
     </div>
