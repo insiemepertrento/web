@@ -66,9 +66,11 @@
         <ul>
           <li><a href="#hero" class="active">Home</a></li>
           <li><a href="#about">Scopri di più</a></li>
-          <li><a href="#candidati">20 donne e 20 uomini</a></li>
+          <li><a href="#candidati">Chi siamo</a></li>
           <li><a href="#appuntamenti">Appuntamenti</a></li>
-          <li><a href="#contact">Contatti</a></li>
+          <li><a href="#sostienici">Sostienici</a></li>
+          <li><a href="docs/programma_2025.pdf">Il nostro programma</a></li>
+          <li><a href="#contatti">Contatti</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -86,8 +88,8 @@
         <!-- Slide 1 -->
         <div class="carousel-item active">
           <div class="carousel-container">
-            <h2 class="animate__animated animate__fadeInDown">{{ site.title }}</h2>
-            <p class="animate__animated animate__fadeInUp"><big>{{ site.slogan }}</big></p>
+            <h2 class="animate__animated animate__fadeInDown">{{ site.slogan }}</h2>
+            <p class="animate__animated animate__fadeInUp"></p>
             <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">scopri di più</a>
           </div>
         </div>
@@ -143,35 +145,35 @@
 <!-- Section Title -->
 <div class="container section-title" data-aos="fade-up">
   <h2>Scopri di più</h2>
-  <p>Chi siamo</p>
+  <p>{{ site.title}}</p>
 </div><!-- End Section Title -->
 
 <div class="container">
   <div class="row gy-4">
-    
     <div class="col-lg-12 text-center" data-aos="fade-up" data-aos-delay="200">
-      <img src="assets/img/poster.jpg" class="img-fluid" alt="Poster"/>
+      <img src="assets/img/amare_trento_banner.png" class="img-fluid" alt="Poster"/>
     </div>
-
     <div class="col-lg-12 content text-left" data-aos="fade-up" data-aos-delay="100">
       <p>
+        <big>
         {% if page.about %} {% capture about %}{% include_relative _texts/{{ page.about }}%}{% endcapture %} {{ about | markdownify }} {% endif %}      </p>
-    </div>
+      </big>
+      </div>
 
   </div>
 </div>
 
 
     <!-- Team Section -->
-    <section id="candidati" class="team section">
+    <section id="candidati" class="team section" style="background-color: #ffcb27;">  
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-aos="fade-up" style="background-color: #ffcb27;">
         <h2>20 uomini e 20 donne</h2>
         <p>Ecco la nostra squadra</p>
       </div><!-- End Section Title -->
 
-      <div class="container">
+      <div class="container" style="background-color: #ffcb27;">
 
         <div class="row gy-4">
           {% for candidate in site.data.candidates %}
@@ -193,11 +195,7 @@
           {% endfor %}
         </div>
         
-
-
-
         </div>
-
       </div>
 
     </section><!-- /Team Section -->
@@ -212,26 +210,52 @@
           </div><!-- End Section Title -->
     
           <div class="container">
-    
-            <div class="row gy-4">
-    
+          <div class="row gy-4">
+            {% for event in site.data.events %}
               <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                 <div class="service-item  position-relative">
                   <div class="icon">
-                    <i class="bi bi-cash-stack" style="color: #0dcaf0;"></i>
+                    <i class="bi bi-calendar4-week" style="color: #0dcaf0;"></i>
                   </div>
-                    <h3>Festa di apertura della campagna elettorale</h3>
-                  <p>Unisciti a noi il 21 marzo alle ore 17 in Piazza Garzetti per la festa di apertura della campagna elettorale! Sarà un evento imperdibile con il ritmo esuberante dell'ensemble Bandastorta e la presentazione del progetto Stare Bene in Pellicola a cura di Andrea Santoni.</p>
+                    <h3>{{ event.when}}</h3>
+                    <h4>{{ event.title }}</h4>
+                    <h4>{{ event.speakers}}</h4>
+                    <h5>{{ event.where}}</h5>
+                  <p>{{ event.desc}}</p>
                 </div>
               </div><!-- End Service Item -->
+            {% endfor %}
             </div>
     
           </div>
     
         </section><!-- /Services Section -->
 
+            <!-- Faq Section -->
+    <section id="sostienici" class="faq section" style="background-color: #ffcb27;">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Sostienici</h2>
+        <p>Se vuoi sostenere la nostra causa</p>
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up">
+        <div class="row">
+          <div class="col-12">
+          Puoi sostenere la nostra causa con una donazione, anche piccola, che ci permetterà di sostenere le spese della campagna elettorale.
+          Questi gli estremi per un versamento sul nostro conto corrente<br/>
+          <div class="alert alert-warning" role="alert">
+          IBAN: IT40K0801601801000031445146<br/>
+          Banca: Cassa Rurale Alto Garda
+          </div>
+        </div>
+      </div>
+      </div>
+    </section><!-- /Faq Section -->
+
+
     <!-- Contact Section -->
-    <section id="contact" class="contact section">
+    <section id="contatti" class="contact section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
