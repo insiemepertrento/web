@@ -111,50 +111,18 @@
     <section id="hero" class="hero section dark-background">
 
       <div id="hero-carousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
-
-        <!-- Slide 1 -->
-        <div class="carousel-item active">
+	{% assign first = true %}
+	{% for slogan in site.data.slogans %}
+	<!-- Slide 1 -->
+        <div class="carousel-item {% if first %}active{% endif %}">
           <div class="carousel-container">
-            <h2 class="animate__animated animate__fadeInDown">{{ site.slogan1 }}</h2>
-            <p class="animate__animated animate__fadeInUp">elezioni comunali 2025</p>
+            <h2 class="animate__animated animate__fadeInDown">{{ slogan.slogan }}</h2>
+	    <p class="animate__animated animate__fadeInUp">{{ slogan.subslogan }}</p>
             <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">scopri di più</a>
           </div>
         </div>
-
-        <div class="carousel-item">
-          <div class="carousel-container">
-	  <h2 class="animate__animated animate__fadeInDown">{{ site.slogan2 }}</h2>
-	  <p class="animate__animated animate__fadeInUp">elezioni comunali 2025</p>
-            <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Scopri di più</a>
-          </div>
-        </div>
-
-        <div class="carousel-item">
-          <div class="carousel-container">
-          <h2 class="animate__animated animate__fadeInDown">{{ site.slogan3 }}</h2>
-          <p class="animate__animated animate__fadeInUp">elezioni comunali 2025</p>
-            <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Scopri di più</a>
-          </div>
-        </div>
-
-	 <div class="carousel-item">
-          <div class="carousel-container">
-          <h2 class="animate__animated animate__fadeInDown">{{ site.slogan4 }}</h2>
-	  <p class="animate__animated animate__fadeInUp">elezioni comunali 2025</p>
-            <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Scopri di più</a>
-          </div>
-        </div>
-
-	 <div class="carousel-item">
-          <div class="carousel-container">
-          <h2 class="animate__animated animate__fadeInDown">{{ site.slogan5 }}</h2>
-          <p class="animate__animated animate__fadeInUp">elezioni comunali 2025</p>
-            <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">Scopri di più</a>
-          </div>
-        </div>
-
-
-
+	{% assign first = false %}
+	{% endfor %}
         <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
           <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
         </a>
