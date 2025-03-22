@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Insieme per Trento: conosci {{ page.member }}</title>
+  <meta name="description" content="conosci NOME della lista Insieme per Trento">
+  <meta name="keywords" content="{{ site.keywords }}">
+
+  <!-- Favicons -->
+  <link href="../assets/img/favicon.png" rel="icon">
+  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+	<!-- Open Graph / Facebook -->
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="{{ site.url }}/{{ page.memberfile}}" />
+	<meta property="og:title" content="Insieme per Trento: conosci {{ page.member}}" />
+	<meta property="og:description" content="conosci {{ page.member}} della lista Insieme per Trento" />
+	<meta property="og:image" content="../assets/img/team/santini/{{ page.memberfile}}.jpg" />
+
+	<!-- Twitter -->
+	<meta property="twitter:card" content="conosci {{ page.member}} della lista Insieme per Trento" />
+	<meta property="twitter:url" content="{{ site.url }}/{{ page.memberfile}}" />
+	<meta property="twitter:title" content="Insieme per Trento: conosci {{ page.member}}" />
+	<meta property="twitter:description" content="conosci Monica Baggia della lista Insieme per Trento" />
+	<meta property="twitter:image" content="../assets/img/team/santini/{{ page.memberfile}}.jpg" />
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="../assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="../assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="../assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="../assets/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: Selecao
+  * Template URL: https://bootstrapmade.com/selecao-bootstrap-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="service-details-page">
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+      <!-- Cookie Policy -->
+      <div class="modal fade" id="cookie" tabindex="-1" role="dialog" aria-labelledby="titoloModale" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="titoloModale">Cookie Policy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi">
+                    </button>
+              </div>
+              <div class="modal-body">
+          <p class="text-left">
+                Questo sito non utilizza cookie.<br/>
+          Durante la navigazione su questo sito non viene installato alcun cookie sul tuo dispositivo.<br/>
+          Non viene raccolto, memorizzzato o tracciato alcun tipo di informazione personale tramite cookie o altre tecnologie di tracciamento.<br/>
+          Grazie per la tua visita!
+          </p>
+        </div>
+            </div>
+        </div>
+    </div>
+    <a href="../index.html" class="logo d-flex align-items-center">
+      <!-- Uncomment the line below if you also wish to use an image logo -->
+      <img src="../assets/img/logo.png" alt="">
+      <h1 class="sitename">{{ site.title }}</h1>
+    </a>
+
+    <nav id="navmenu" class="navmenu">
+      <ul>
+        <li><a href="../#hero" class="active">Home</a></li>
+        <li><a href="../#about">Scopri di più</a></li>
+        <li><a href="../#candidati">Chi siamo</a></li>
+        <li><a href="../#appuntamenti">Appuntamenti</a></li>
+        <li><a href="../#sostienici">Sostienici</a></li>
+  <li><a href="../docs/programma_coalizione2025.pdf">Programma di coalizione</a></li>
+        <li><a href="../#contatti">Contatti</a></li>
+  <li><a href="#" data-bs-toggle="modal" data-bs-target="#cookie">Cookie Policy</a></li>
+</ul>
+      <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+    </nav>
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title dark-background">
+      <div class="container position-relative">
+        <h1>{{ page.member}}</h1>
+        {% if page.slogan %}
+        <p>{{ page.slogan}}</p>
+        {% else %}
+        <p>qualcosa di più su di me</p>
+        {% endif %}
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../index.html#candidati">Chi siamo</a></li>
+            <li class="current">{{ page.member}}</li>
+          </ol>
+        </nav>
+      </div>
+    </div><!-- End Page Title -->
+
+    <!-- Service Details Section -->
+    <section id="service-details" class="service-details section">
+
+      <div class="container">
+
+        <div class="row gy-5">
+
+          <div class="col-lg-4 ps-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <img src="../assets/img/team/png/{{ page.photo}}" alt="" class="img-fluid services-img">
+          </div>
+          <div class="col-lg-4 ps-lg-4" data-aos="fade-up" data-aos-delay="200">
+          <p>
+            {{ page.desc }}
+          </p>
+          </div>
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+
+            <div class="service-box">
+              <h4>Maggiori informazioni</h4>
+              <div class="services-list">
+                {% if page.facebook %}
+                <a href="https://www.facebook.com/{{ page.facebook}}" target="_new"><i class="bi bi-facebook"></i><span>Facebook</span></a>
+                {% endif %}
+                {% if page.instagram %}
+                <a href="https://www.instagram.com/{{ page.instagram}}" target="_new"><i class="bi bi-instagram"></i><span>Instagram</span></a>
+                {% endif %}
+                {% if page.linkedin %}
+                <a href="https://www.linkedin.com/in/{{ page.linkedin}}" target="_new"><i class="bi bi-linkedin"></i><span>Linkedin</span></a>
+                {% endif %}
+                <a href="../docs/cv/{{ page.cv}}"><i class="bi bi-file-person"></i><span>Curriculum</span></a>
+                <a href="../docs/cr/{{ page.records}}"><i class="bi bi-arrow-right-circle"></i><span>Casellario giudiziario</span></a>
+              </div>
+            </div><!-- End Services List -->
+          </div>
+          <div class="row gy-5" bakground-color="light">
+            <img src="../assets/img/team/santini/memo/memo_{{ page.namefile}}.jpg" alt="" class="img-fluid services-img">
+            </div><!-- End Services List -->
+          </div>
+          <div class="row gy-5">
+            <div class="service-box">
+              <h4>Materiale divulgativo</h4>
+              <div class="download-catalog">
+                {% if page.video_instagram %}
+                <a href="https://www.instagram.com/reel/{{ page.video_instagram}}/" target="_new"><i class="bi bi-filetype-mp4"></i><span>la presentazione su Instagram</span></a>
+                {% endif %}
+                <a href="../docs/santini/{{ page.namefile}}.pdf"><i class="bi bi-filetype-pdf"></i><span>PDF memo elettorale</span></a>
+                <a href="../assets/img/team/santini/{{ page.namefile}}.png"><i class="bi bi-filetype-png"></i><span>PNG memo elettorale</span></a>
+              </div>
+            </div><!-- End Services List -->
+          </div>
+
+
+
+        </div>
+      </div>
+
+    </section><!-- /Service Details Section -->
+
+  </main>
+
+  <footer id="footer" class="footer dark-background">
+    <div class="container">
+      <h3 class="sitename">Insieme per Trento</h3>
+      <p>Lista civica a sostegno del candidato sindaco Franco Ianeselli per il comune di Trento</p>
+      <div class="social-links d-flex justify-content-center">
+        <a href="https://www.facebook.com/{{ site.facebook}}"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.instagram.com/{{ site.instagram}}"><i class="bi bi-instagram"></i></a>
+      </div>
+      <div class="container">
+        <div class="copyright">
+          <span>associazione politica "Ianeselli Sindaco - Insieme per Trento", Largo Carducci 45, 38122 Trento, P.IVA 96124270222</span>
+          <br/>
+          <span>Contenuti rilasciati in <strong class="px-1 sitename">CC-BY 4.0</strong></span>
+        </div>
+        <div class="credits">
+          <small>Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/aos/aos.js"></script>
+  <script src="../assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="../assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="../assets/js/main.js"></script>
+
+</body>
+
+</html>
