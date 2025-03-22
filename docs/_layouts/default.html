@@ -175,25 +175,33 @@
 
 
     <!-- Team Section -->
-    <section id="candidati" class="team section" style="background-color: #ffcb27;">  
+    <section id="candidati" class="team section" style="background-color: #fed500;">  
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up" style="background-color: #ffcb27;">
+      <div class="container section-title" data-aos="fade-up" style="background-color: #fed500;">
         <h2>20 uomini e 20 donne</h2>
         <p>Ecco la nostra squadra</p>
       </div><!-- End Section Title -->
 
-      <div class="container" style="background-color: #ffcb27;">
+      <div class="container" style="background-color: #fed500;">
 
         <div class="row gy-4">
           {% for candidate in site.data.candidates %}
+          {% assign name = candidate.name %}
+          {% if name contains " detta" %}
+            {% assign name = name | split: " detta" | first %}
+          {% elsif name contains " detto" %}
+            {% assign name = name | split: " detto" | first %}
+          {% endif %}
+          {% assign name = name | downcase | replace: ' ', '_' %}
 	  <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100" id="{{ candidate.name | downcase | replace: ' ', '_' }}">
 		<div class="team-member">
-                <div class="member-img" style="background-color: #ffcb27;">
+                <div class="member-img" style="background-color: #fed500;">
                   <img src="assets/img/team/{{ candidate.photo }}" class="img-fluid" alt="{{ candidate.name }}">
                   <div class="social">
                     <a href="docs/cv/{{ candidate.cv }}"><i class="bi bi-file-person"></i></a>
                     <a href="docs/cr/{{ candidate.records }}"><i class="bi bi-archive"></i></a>
+                    <a href="{{name}}"><i class="bi bi-browser-firefox"></i></a></a>
                   </div>
                 </div>
                 <div class="member-info" style="background-color: #ffffff;">
@@ -242,7 +250,7 @@
         </section><!-- /Services Section -->
 
             <!-- Faq Section -->
-    <section id="sostienici" class="faq section" style="background-color: #ffcb27;">
+    <section id="sostienici" class="faq section" style="background-color: #fed500;">
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Sostienici</h2>
