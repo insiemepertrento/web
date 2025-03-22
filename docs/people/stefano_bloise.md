@@ -11,5 +11,5 @@ facebook:
 instagram: 
 linkedin: stefano-bloise-9290b3161
 video_instagram: 
-slogan: Esperienza, passione e voglia di fare&#58; per una comunità che cresce insieme!
+slogan: Dedizione e competenza al servizio della comunità, per costruire una città più inclusiva e sostenibile.
 ---
