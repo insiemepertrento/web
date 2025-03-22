@@ -11,5 +11,5 @@ facebook:
 instagram: 
 linkedin: stefano-bloise-9290b3161
 video_instagram: 
-slogan: 
+slogan: Esperienza, passione e voglia di fare&#58; per una comunità che cresce insieme!
 ---
