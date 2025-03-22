@@ -1,8 +1,8 @@
 ---
 layout: personal_page
 member: Jenny Koyate detta Jenny
-permalink: /jenny_koyate_detta_jenny
-namefile: jenny_koyate_detta_jenny
+permalink: /jenny_koyate_detta
+namefile: jenny_koyate_detta
 cv: koyate.pdf
 records: koyate.pdf
 photo: team-24.png
