@@ -11,5 +11,5 @@ facebook: chiara.depol
 instagram: blondy_wanderer
 linkedin: chiara-de-pol-47841041/
 video_instagram: DG3S1kaK6_x
-slogan: 
+slogan: Trasformo la mia esperienza in forza collettiva, unendo comunicazione e solidarietà per sostenere chi affronta sfide difficili.
 ---
