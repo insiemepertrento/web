@@ -6,7 +6,7 @@ namefile: alessandro_ciervo_detto_ale_picaro
 cv: ciervo.pdf
 records: ciervo.pdf
 photo: team-10.png
-desc: Gestore del Bar Picaro da 24 anni, si ricandida per una Trento più sicura, di giorno e di notte. Attivo nella sostenibilità con Re-cig per il riciclo dei mozziconi, si impegna per migliorare trasporti serali, raccolta differenziata e semplificare la burocrazia per le associazioni.
+desc: alias Ale Picaro. Gestisco il Bar Picaro da 24 anni e dato le problematiche nella zona di Santa Maria Maggiore, ho deciso di ricandidarmi, per creare una Trento sicura di giorno e di notte. Inoltre lavoro per la re-cig che ricicla mozziconi di sigarette, dato che ci tengo all&#x27;ambiente. Le mie intenzioni sono di risolvere le questioni sulla sicurezza, continuare a creare sinergie con le associazioni trentine e magari semplificarne la burocrazia, migliorare i trasporti soprattutto serali e cercare di migliorare la raccolta differenziata, anche magari riciclando le mascherine che tutt&#x27;ora sono dentro agli istituti scolastici.
 facebook: 
 instagram: 
 linkedin: 
