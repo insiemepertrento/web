@@ -6,7 +6,7 @@ namefile: lorenzo_dalrì
 cv: dalri.pdf
 records: dalri.pdf
 photo: team-6.png
-desc: Ho lavorato fin dalla terza media, impegnandomi da subito come delegato sindacale. Anche da pensionato, continuo a dare consigli in ambito lavorativo. Appassionato di funghi e tifoso della Trentino Volley, credo che con l’impegno di tutti si possa costruire una società migliore per i nostri ragazzi.
+desc: Ho cominciato a lavorare finita la terza media  Fin da subito mi sono messo a disposizione degli altri impegnandomi come delegato sindacale  E ancora oggi che sono pensionato ho delle persone che mi chiamano per qualche consiglio nell&#x27;ambito lavorativo  Come hobby mi piace molto andare a raccogliere funghi ,e un amore grande per la Trentino volley come tifoso della curva Gislimberti Credo che con l&#x27;impegno di tutti si possa veramente cambiare in meglio la nostra società  In modo che i nostri ragazzi possano avere una vita serena 
 facebook: 
 instagram: 
 linkedin: 
