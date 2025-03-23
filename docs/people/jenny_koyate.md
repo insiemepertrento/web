@@ -11,5 +11,5 @@ facebook: jenny.koyate
 instagram: jenny.koyate
 linkedin: jenny-koyate
 video_instagram: 
-slogan: 
+slogan: toi trentin, su con le rece e scolta ben!
 ---
