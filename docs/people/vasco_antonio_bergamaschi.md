@@ -11,5 +11,5 @@ facebook: vasco.bergamaschi
 instagram: vascorange
 linkedin: vasco-bergamaschi
 video_instagram: DHX4li6tGnx
-slogan: 
+slogan: Dedizione e competenza al servizio della comunità, per costruire una città più inclusiva e sostenibile.
 ---
