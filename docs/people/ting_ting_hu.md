@@ -10,6 +10,6 @@ desc: Sona nata a Moncalieri e cresciuta in Cina, ho avuto la fortuna di vivere 
 facebook: 
 instagram: 
 linkedin: 
-video_instagram: 
+video_instagram: DHld1SyNwXc
 slogan: 
 ---
