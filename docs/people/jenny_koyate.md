@@ -10,6 +10,6 @@ desc: Psicologa, Docente e Volontaria<br/>Sono una psicologa clinica e del lavor
 facebook: jenny.koyate
 instagram: jenny.koyate
 linkedin: jenny-koyate
-video_instagram: 
+video_instagram: DHqBEnQtgTH
 slogan: toi trentin, su con le rece e scolta ben!
 ---
