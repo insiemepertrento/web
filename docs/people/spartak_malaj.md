@@ -7,9 +7,9 @@ cv: malaj.pdf
 records: malaj.pdf
 photo: team-26.png
 desc: nato in Albania, vive a Trento dal 2001. Qui ha trovato opportunità di crescita personale e professionale, abbracciando valori come lo studio e l’accessibilità per tutti. Per lui, Trento non è solo una città, ma una comunità da valorizzare e far crescere insieme.
-facebook: 
+facebook: spartak.malaj1
 instagram: 
 linkedin: 
-video_instagram: 
+video_instagram: DHsqo83t8wA
 slogan: 
 ---
