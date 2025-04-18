@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulazione Voto - Flip + X e Testo Corretti</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background: #eee;
+      font-family: sans-serif;
+    }
+
+    .scene {
+      width: 100vw;
+      height: 100vh;
+      perspective: 2000px;
+      position: relative;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform-style: preserve-3d;
+      transition: transform 1s;
+    }
+
+    .card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      transform: rotateY(0deg);
+    }
+
+    .face.front img,
+    .face.back img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .back {
+      transform: rotateY(180deg);
+    }
+
+    .overlay, .name-label {
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
+      position: absolute;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .overlay {
+      top: calc(40.57% - 10px);
+      left: calc(69.72% - 45px);
+      transform: translate(-50%, -50%);
+      font-size: 6vw;
+      font-weight: bold;
+      color: black;
+    }
+
+    .name-label {
+      top: 39.07%;
+      left: 74.08%;
+      transform: translateY(-50%);
+      font-size: 2.5vw;
+      font-weight: bold;
+      color: black;
+      font-family: 'Great Vibes', cursive;
+    }
+
+    .show-vote .overlay,
+    .show-vote .name-label {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <div class="card" id="card">
+      <div class="face front">
+        <img src="svg_pages/page_1.svg" alt="Pagina 1" />
+      </div>
+      <div class="face back">
+        <img src="svg_pages/page_2.svg" alt="Pagina 2" />
+      </div>
+    </div>
+    <div class="overlay">X</div>
+    <div class="name-label">nome a chi dai il voto</div>
+  </div>
+
+  <script>
+    setTimeout(() => {
+      document.getElementById('card').classList.add('flipped');
+    }, 2000);
+
+    setTimeout(() => {
+      document.querySelector('.scene').classList.add('show-vote');
+    }, 4000);
+  </script>
+</body>
+</html>
