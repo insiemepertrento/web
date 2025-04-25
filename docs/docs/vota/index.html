@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Simulazione Voto - Flip + X e Testo Corretti</title>
+  <title>Simulazione Voto - Flip + X e Testo + Piegatura</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
     html, body {
@@ -19,6 +19,7 @@
       height: 100vh;
       perspective: 2000px;
       position: relative;
+      overflow: hidden;
     }
 
     .card {
@@ -33,6 +34,10 @@
 
     .card.flipped {
       transform: rotateY(180deg);
+    }
+
+    .card.unflipped {
+      transform: rotateY(0deg);
     }
 
     .face {
@@ -85,6 +90,34 @@
     .show-vote .name-label {
       opacity: 1;
     }
+
+    .fold-left, .fold-right {
+      position: absolute;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 20;
+      background: white;
+      transform-origin: center;
+      transition: transform 1s ease-in-out;
+    }
+
+    .fold-left {
+      left: 0;
+    }
+
+    .fold-right {
+      right: 0;
+    }
+
+    .fold-left.folded {
+      transform: rotateY(90deg);
+    }
+
+    .fold-right.folded {
+      transform: rotateY(-90deg);
+    }
   </style>
 </head>
 <body>
@@ -98,7 +131,9 @@
       </div>
     </div>
     <div class="overlay">X</div>
-    <div class="name-label">nome a chi dai il voto</div>
+    <div class="name-label">Tizio Caio</div>
+    <div class="fold-left" id="foldLeft"></div>
+    <div class="fold-right" id="foldRight"></div>
   </div>
 
   <script>
@@ -109,6 +144,16 @@
     setTimeout(() => {
       document.querySelector('.scene').classList.add('show-vote');
     }, 4000);
+
+    setTimeout(() => {
+      document.getElementById('card').classList.remove('flipped');
+      document.getElementById('card').classList.add('unflipped');
+    }, 6000);
+
+    setTimeout(() => {
+      document.getElementById('foldLeft').classList.add('folded');
+      document.getElementById('foldRight').classList.add('folded');
+    }, 8000);
   </script>
 </body>
 </html>

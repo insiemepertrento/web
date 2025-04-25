@@ -1,222 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>{{ site.title }}</title>
-  <meta name="description" content="{{ site.intro }}">
-  <meta name="keywords" content="{{ site.keywords }}">
+  <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>{{ site.title }}</title>
+    <meta name="description" content="{{ site.intro }}">
+    <meta name="keywords" content="{{ site.keywords }}">
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-	<!-- Open Graph / Facebook -->
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="{{ site.url }}" />
-	<meta property="og:title" content="{{ site.title }}" />
-	<meta property="og:description" content="{{ site.description }}" />
-	<meta property="og:image" content="{{ site.preview }}" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ site.url }}" />
+    <meta property="og:title" content="{{ site.title }}" />
+    <meta property="og:description" content="{{ site.description }}" />
+    <meta property="og:image" content="{{ site.preview }}" />
 
-	<!-- Twitter -->
-	<meta property="twitter:card" content="{{ site.intro }}" />
-	<meta property="twitter:url" content="{{ site.url }}" />
-	<meta property="twitter:title" content="{{ site.title }}" />
-	<meta property="twitter:description" content="{{ site.description }}" />
-	<meta property="twitter:image" content="{{ site.preview }}" />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="{{ site.intro }}" />
+    <meta property="twitter:url" content="{{ site.url }}" />
+    <meta property="twitter:title" content="{{ site.title }}" />
+    <meta property="twitter:description" content="{{ site.description }}" />
+    <meta property="twitter:image" content="{{ site.preview }}" />
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Main CSS File -->
-  <link href="assets/css/main.css" rel="stylesheet">
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
+    <!-- =======================================================
   * Template Name: Selecao
   * Template URL: https://bootstrapmade.com/selecao-bootstrap-template/
   * Updated: Aug 07 2024 with Bootstrap v5.3.3
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-</head>
+  </head>
 
-<body class="index-page">
+  <body class="index-page">
 
-	<!-- Cookie Policy -->
-	<div class="modal fade" id="cookie" tabindex="-1" role="dialog" aria-labelledby="titoloModale" aria-hidden="true">
-    		<div class="modal-dialog" role="document">
-      			<div class="modal-content">
-        			<div class="modal-header">
-          				<h5 class="modal-title" id="titoloModale">Cookie Policy</h5>
-            				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi">
-					</button>
-        			</div>
-        			<div class="modal-body">
-					<p class="text-left">
-        				Questo sito non utilizza cookie.<br/>
-					Durante la navigazione su questo sito non viene installato alcun cookie sul tuo dispositivo.<br/>
-					Non viene raccolto, memorizzato o tracciato alcun tipo di informazione personale tramite cookie o altre tecnologie di tracciamento.<br/>
-					Grazie per la tua visita!
-					</p>
-				</div>
-				<!--
+    <!-- Cookie Policy -->
+    <div class="modal fade" id="cookie" tabindex="-1" role="dialog" aria-labelledby="titoloModale" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="titoloModale">Cookie Policy</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi">
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="text-left">
+              Questo sito non utilizza cookie.<br />
+              Durante la navigazione su questo sito non viene installato alcun cookie sul tuo dispositivo.<br />
+              Non viene raccolto, memorizzato o tracciato alcun tipo di informazione personale tramite cookie o altre
+              tecnologie di tracciamento.<br />
+              Grazie per la tua visita!
+            </p>
+          </div>
+          <!--
         			<div class="modal-footer">
           				<button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
         			</div>
 				-->
-      			</div>
-    		</div>
-  	</div>
-
-  <header id="header" class="header d-flex align-items-center fixed-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-      <a href="index.html" class="logo d-flex align-items-center">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <img src="assets/img/logo.png" alt="">
-        <h1 class="sitename">{{ site.title }}</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="#hero" class="active">Home</a></li>
-          <li><a href="#about">Scopri di più</a></li>
-          <li><a href="#candidati">Chi siamo</a></li>
-          <li><a href="#appuntamenti">Appuntamenti</a></li>
-          <li><a href="#sostienici">Sostienici</a></li>
-	  <li><a href="docs/programma_coalizione2025.pdf">Programma di coalizione</a></li>
-          <li><a href="#contatti">Contatti</a></li>
-	  <li><a href="#" data-bs-toggle="modal" data-bs-target="#cookie">Cookie Policy</a></li>
-	</ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
+        </div>
+      </div>
     </div>
-  </header>
 
-  <main class="main">
+    <header id="header" class="header d-flex align-items-center fixed-top">
+      <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
-    <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
+        <a href="index.html" class="logo d-flex align-items-center">
+          <!-- Uncomment the line below if you also wish to use an image logo -->
+          <img src="assets/img/logo.png" alt="">
+          <h1 class="sitename">{{ site.title }}</h1>
+        </a>
 
-      <div id="hero-carousel" data-bs-interval="5000" class="container carousel carousel-fade" data-bs-ride="carousel">
-	{% assign first = true %}
-	{% for slogan in site.data.slogans %}
-	<!-- Slide 1 -->
-        <div class="carousel-item {% if first %}active{% endif %}">
-          <div class="carousel-container">
-            <h2 class="animate__animated animate__fadeInDown">{{ slogan.slogan }}</h2>
-	    <p class="animate__animated animate__fadeInUp">{{ slogan.subslogan }}</p>
-            <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">scopri di più</a>
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="#hero" class="active">Home</a></li>
+            <li><a href="#about">Scopri di più</a></li>
+            <li><a href="#candidati">Chi siamo</a></li>
+            <li><a href="#appuntamenti">Appuntamenti</a></li>
+            <li><a href="#sostienici">Sostienici</a></li>
+            <li class="dropdown"><a href="#"><span>Programma di coalizione</span> <i
+                  class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <ul>
+                <li><a
+                    href="https://www.francoianeselli.it/images/ianeselli/docs/Pieghevole_14x25_Ianeselli_web_pagine_singole.pdf">in
+                    20 obiettivi</a></li>
+                <li><a
+                    href="https://www.francoianeselli.it/images/ianeselli/docs/Brochure_A4_Ianeselli.pdf">sintetico</a>
+                </li>
+                <li><a
+                    href="https://www.francoianeselli.it/images/ianeselli/docs/Programma%202025_bozza_7_3_25-1.pdf">completo</a>
+                </li>
+              </ul>
+            </li>
+            <li><a href="#contatti">Contatti</a></li>
+            <li><a href="#" data-bs-toggle="modal" data-bs-target="#cookie">Cookie Policy</a></li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+      </div>
+    </header>
+
+    <main class="main">
+
+      <!-- Hero Section -->
+      <section id="hero" class="hero section dark-background">
+
+        <div id="hero-carousel" data-bs-interval="5000" class="container carousel carousel-fade"
+          data-bs-ride="carousel">
+          {% assign first = true %}
+          {% for slogan in site.data.slogans %}
+          <!-- Slide 1 -->
+          <div class="carousel-item {% if first %}active{% endif %}">
+            <div class="carousel-container">
+              <h2 class="animate__animated animate__fadeInDown">{{ slogan.slogan }}</h2>
+              <p class="animate__animated animate__fadeInUp">{{ slogan.subslogan }}</p>
+              <a href="#about" class="btn-get-started animate__animated animate__fadeInUp scrollto">scopri di più</a>
+            </div>
+          </div>
+          {% assign first = false %}
+          {% endfor %}
+          <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+          </a>
+
+          <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 24 150 28 " preserveAspectRatio="none">
+          <defs>
+            <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
+          </defs>
+          <g class="wave1">
+            <use xlink:href="#wave-path" x="50" y="3"></use>
+          </g>
+          <g class="wave2">
+            <use xlink:href="#wave-path" x="50" y="0"></use>
+          </g>
+          <g class="wave3">
+            <use xlink:href="#wave-path" x="50" y="9"></use>
+          </g>
+        </svg>
+
+      </section><!-- /Hero Section -->
+
+      <!-- About Section -->
+      <section id="about" class="about section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>Scopri di più</h2>
+          <p>{{ site.title}}</p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+          <div class="row gy-4">
+            <div class="col-lg-12 text-center" data-aos="fade-up" data-aos-delay="200">
+              <img src="assets/img/amare_trento_banner.svg" class="img-fluid" alt="Poster" />
+            </div>
+            <div class="col-lg-12 content text-left" data-aos="fade-up" data-aos-delay="100">
+              <p>
+                <big>
+                  {% if page.about %} {% capture about %}{% include_relative _texts/{{ page.about }}%}{% endcapture %}
+                  {{ about | markdownify }} {% endif %}
+              </p>
+              </big>
+            </div>
+
           </div>
         </div>
-	{% assign first = false %}
-	{% endfor %}
-        <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
-        </a>
-
-        <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
-          <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
-        </a>
-      </div>
-
-      <svg class="hero-waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28 " preserveAspectRatio="none">
-        <defs>
-          <path id="wave-path" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"></path>
-        </defs>
-        <g class="wave1">
-          <use xlink:href="#wave-path" x="50" y="3"></use>
-        </g>
-        <g class="wave2">
-          <use xlink:href="#wave-path" x="50" y="0"></use>
-        </g>
-        <g class="wave3">
-          <use xlink:href="#wave-path" x="50" y="9"></use>
-        </g>
-      </svg>
-
-    </section><!-- /Hero Section -->
-
-    <!-- About Section -->
-    <section id="about" class="about section">
-
-<!-- Section Title -->
-<div class="container section-title" data-aos="fade-up">
-  <h2>Scopri di più</h2>
-  <p>{{ site.title}}</p>
-</div><!-- End Section Title -->
-
-<div class="container">
-  <div class="row gy-4">
-    <div class="col-lg-12 text-center" data-aos="fade-up" data-aos-delay="200">
-      <img src="assets/img/amare_trento_banner.svg" class="img-fluid" alt="Poster"/>
-    </div>
-    <div class="col-lg-12 content text-left" data-aos="fade-up" data-aos-delay="100">
-      <p>
-        <big>
-        {% if page.about %} {% capture about %}{% include_relative _texts/{{ page.about }}%}{% endcapture %} {{ about | markdownify }} {% endif %}      </p>
-      </big>
-      </div>
-
-  </div>
-</div>
 
 
-    <!-- Team Section -->
-    <section id="candidati" class="team section" style="background-color: #fed500;">  
+        <!-- Team Section -->
+        <section id="candidati" class="team section" style="background-color: #fed500;">
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up" style="background-color: #fed500;">
-        <h2>20 uomini e 20 donne</h2>
-        <p>Ecco la nostra squadra</p>
-      </div><!-- End Section Title -->
+          <!-- Section Title -->
+          <div class="container section-title" data-aos="fade-up" style="background-color: #fed500;">
+            <h2>20 uomini e 20 donne</h2>
+            <p>Ecco la nostra squadra</p>
+          </div><!-- End Section Title -->
 
-      <div class="container" style="background-color: #fed500;">
+          <div class="container" style="background-color: #fed500;">
 
-        <div class="row gy-4">
-          {% for candidate in site.data.candidates %}
-          {% assign name = candidate.name %}
-          {% if name contains " detta" %}
-            {% assign name = name | split: " detta" | first %}
-          {% elsif name contains " detto" %}
-            {% assign name = name | split: " detto" | first %}
-          {% endif %}
-          {% assign name = name | downcase | replace: ' ', '_' %}
-	  <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100" id="{{ candidate.name | downcase | replace: ' ', '_' }}">
-		<div class="team-member">
-                <div class="member-img" style="background-color: #fed500;">
-                  <img src="assets/img/team/{{ candidate.photo }}" class="img-fluid" alt="{{ candidate.name }}">
-                  <div class="social">
-                    <a href="docs/cv/{{ candidate.cv }}"><i class="bi bi-file-person"></i></a>
-                    <a href="docs/cr/{{ candidate.records }}"><i class="bi bi-archive"></i></a>
-                    <a href="{{name}}"><i class="bi bi-browser-firefox"></i></a></a>
+            <div class="row gy-4">
+              {% for candidate in site.data.candidates %}
+              {% assign name = candidate.name %}
+              {% if name contains " detta" %}
+              {% assign name = name | split: " detta" | first %}
+              {% elsif name contains " detto" %}
+              {% assign name = name | split: " detto" | first %}
+              {% endif %}
+              {% assign name = name | downcase | replace: ' ', '_' %}
+              <div class="col-lg-3 col-md-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100"
+                id="{{ candidate.name | downcase | replace: ' ', '_' }}">
+                <div class="team-member">
+                  <div class="member-img" style="background-color: #fed500;">
+                    <img src="assets/img/team/{{ candidate.photo }}" class="img-fluid" alt="{{ candidate.name }}">
+                    <div class="social">
+                      <a href="docs/cv/{{ candidate.cv }}"><i class="bi bi-file-person"></i></a>
+                      <a href="docs/cr/{{ candidate.records }}"><i class="bi bi-archive"></i></a>
+                      <a href="{{name}}"><i class="bi bi-browser-firefox"></i></a></a>
+                    </div>
+                  </div>
+                  <div class="member-info" style="background-color: #ffffff;">
+                    <h4>{{ candidate.name }}</h4>
+                    <span>{{ candidate.about }}</span>
                   </div>
                 </div>
-                <div class="member-info" style="background-color: #ffffff;">
-                  <h4>{{ candidate.name }}</h4>
-                  <span>{{ candidate.about }}</span>
-                </div>
-              </div>
-            </div><!-- End Team Member -->
-          {% endfor %}
-        </div>
-        
-        </div>
-      </div>
+              </div><!-- End Team Member -->
+              {% endfor %}
+            </div>
 
-    </section><!-- /Team Section -->
+          </div>
+          </div>
+
+        </section><!-- /Team Section -->
 
         <!-- Services Section -->
         <section id="appuntamenti" class="services section">
@@ -226,146 +247,149 @@
             <h2>Appuntamenti</h2>
             <p>Gli appuntamenti di coalizione a cui trovarci</p>
           </div><!-- End Section Title -->
-    
+
           <div class="container">
-          <div class="row gy-4">
-            {% for event in site.data.events %}
+            <div class="row gy-4">
+              {% for event in site.data.events %}
               <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
                 <div class="service-item  position-relative">
                   <div class="icon">
                     <i class="bi bi-calendar4-week" style="color: #0dcaf0;"></i>
                   </div>
-                    <h3>{{ event.when}}</h3>
-                    <h4>{{ event.title }}</h4>
-                    <h4>{{ event.speakers}}</h4>
-                    <h5>{{ event.where}}</h5>
+                  <h3>{{ event.when}}</h3>
+                  <h4>{{ event.title }}</h4>
+                  <h4>{{ event.speakers}}</h4>
+                  <h5>{{ event.where}}</h5>
                   <p>{{ event.desc}}</p>
                 </div>
               </div><!-- End Service Item -->
-            {% endfor %}
+              {% endfor %}
             </div>
-    
+
           </div>
-    
+
         </section><!-- /Services Section -->
 
-            <!-- Faq Section -->
-    <section id="sostienici" class="faq section" style="background-color: #fed500;">
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Sostienici</h2>
-        <p>Se vuoi sostenere la nostra causa</p>
-      </div><!-- End Section Title -->
+        <!-- Faq Section -->
+        <section id="sostienici" class="faq section" style="background-color: #fed500;">
+          <!-- Section Title -->
+          <div class="container section-title" data-aos="fade-up">
+            <h2>Sostienici</h2>
+            <p>Se vuoi sostenere la nostra causa</p>
+          </div><!-- End Section Title -->
 
-      <div class="container" data-aos="fade-up">
-        <div class="row">
-          <div class="col-12">
-          Puoi sostenere la nostra causa con una donazione, anche piccola, che ci permetterà di sostenere le spese della campagna elettorale.
-          Questi gli estremi per un versamento sul nostro conto corrente<br/>
-          <div class="alert alert-warning" role="alert">
-          IBAN: IT40K0801601801000031445146<br/>
-          Banca: Cassa Rurale Alto Garda
+          <div class="container" data-aos="fade-up">
+            <div class="row">
+              <div class="col-12">
+                Puoi sostenere la nostra causa con una donazione, anche piccola, che ci permetterà di sostenere le spese
+                della campagna elettorale.
+                Questi gli estremi per un versamento sul nostro conto corrente<br />
+                <div class="alert alert-warning" role="alert">
+                  IBAN: IT40K0801601801000031445146<br />
+                  Banca: Cassa Rurale Alto Garda
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      </div>
-    </section><!-- /Faq Section -->
+        </section><!-- /Faq Section -->
 
 
-    <!-- Contact Section -->
-    <section id="contatti" class="contact section">
+        <!-- Contact Section -->
+        <section id="contatti" class="contact section">
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Contatti</h2>
-        <p>Mettiti in contatto con noi</p>
-      </div><!-- End Section Title -->
+          <!-- Section Title -->
+          <div class="container section-title" data-aos="fade-up">
+            <h2>Contatti</h2>
+            <p>Mettiti in contatto con noi</p>
+          </div><!-- End Section Title -->
 
-      <div class="container" data-aos="fade" data-aos-delay="100">
+          <div class="container" data-aos="fade" data-aos-delay="100">
 
-        <div class="row gy-4">
+            <div class="row gy-4">
 
-          <div class="col-lg-4">
-            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-              <i class="bi bi-geo-alt flex-shrink-0"></i>
-              <div>
-                <h3>Indirizzo</h3>
-                <p>Largo Carducci 45, 38122 Trento</p>
+              <div class="col-lg-4">
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                  <i class="bi bi-geo-alt flex-shrink-0"></i>
+                  <div>
+                    <h3>Indirizzo</h3>
+                    <p>Largo Carducci 45, 38122 Trento</p>
+                  </div>
+                </div><!-- End Info Item -->
+
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                  <i class="bi bi-envelope flex-shrink-0"></i>
+                  <div>
+                    <h3>Email</h3>
+                    <p>info@insiemepertrento.it</p>
+                  </div>
+                </div><!-- End Info Item -->
+
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                  <i class="bi bi-facebook flex-shrink-0"></i>
+                  <div>
+                    <h3>La nostra pagina facebook</h3>
+                    <p><a href="https://facebook.com/insiemepertrento">Insieme per Trento</a></p>
+                  </div>
+                </div><!-- End Info Item -->
+
+                <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
+                  <i class="bi bi-instagram flex-shrink-0"></i>
+                  <div>
+                    <h3>Siamo anche su Instagram</h3>
+                    <p><a href="https://instagram.com/insiemepertrento">Insieme per Trento</a></p>
+                  </div>
+                </div><!-- End Info Item -->
+
               </div>
-            </div><!-- End Info Item -->
 
-            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-              <i class="bi bi-envelope flex-shrink-0"></i>
-              <div>
-                <h3>Email</h3>
-                <p>info@insiemepertrento.it</p>
-              </div>
-            </div><!-- End Info Item -->
-
-            <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-              <i class="bi bi-facebook flex-shrink-0"></i>
-              <div>
-                <h3>La nostra pagina facebook</h3>
-		<p><a href="https://facebook.com/insiemepertrento">Insieme per Trento</a></p>
-              </div>
-            </div><!-- End Info Item -->
-
-	    <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-              <i class="bi bi-instagram flex-shrink-0"></i>
-              <div>
-                <h3>Siamo anche su Instagram</h3>
-		<p><a href="https://instagram.com/insiemepertrento">Insieme per Trento</a></p>
-              </div>
-            </div><!-- End Info Item -->
+            </div>
 
           </div>
 
-        </div>
+        </section><!-- /Contact Section -->
 
-      </div>
+    </main>
 
-    </section><!-- /Contact Section -->
-
-  </main>
-
-  <footer id="footer" class="footer dark-background">
-    <div class="container">
-      <h3 class="sitename">Insieme per Trento</h3>
-      <p>Lista civica a sostegno del candidato sindaco Franco Ianeselli per il comune di Trento</p>
-      <div class="social-links d-flex justify-content-center">
-        <a href="https://www.facebook.com/{{ site.facebook}}"><i class="bi bi-facebook"></i></a>
-        <a href="https://www.instagram.com/{{ site.instagram}}"><i class="bi bi-instagram"></i></a>
-      </div>
+    <footer id="footer" class="footer dark-background">
       <div class="container">
-        <div class="copyright">
-          <span>associazione politica "Ianeselli Sindaco - Insieme per Trento", Largo Carducci 45, 38122 Trento, P.IVA 96124270222</span>
-          <br/>
-          <span>Contenuti rilasciati in <strong class="px-1 sitename">CC-BY 4.0</strong></span>
+        <h3 class="sitename">Insieme per Trento</h3>
+        <p>Lista civica a sostegno del candidato sindaco Franco Ianeselli per il comune di Trento</p>
+        <div class="social-links d-flex justify-content-center">
+          <a href="https://www.facebook.com/{{ site.facebook}}"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/{{ site.instagram}}"><i class="bi bi-instagram"></i></a>
         </div>
-        <div class="credits">
-          <small>Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></small>
+        <div class="container">
+          <div class="copyright">
+            <span>associazione politica "Ianeselli Sindaco - Insieme per Trento", Largo Carducci 45, 38122 Trento, P.IVA
+              96124270222</span>
+            <br />
+            <span>Contenuti rilasciati in <strong class="px-1 sitename">CC-BY 4.0</strong></span>
+          </div>
+          <div class="credits">
+            <small>Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a></small>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
+    <!-- Preloader -->
+    <div id="preloader"></div>
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
 
-</body>
+  </body>
 
 </html>
