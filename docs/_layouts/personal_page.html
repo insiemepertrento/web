@@ -82,10 +82,19 @@
 
     <nav id="navmenu" class="navmenu">
       <ul>
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#about">Scopri di più</a></li>
-        <li><a href="#candidati" class="active">Chi siamo</a></li>
-        <li><a href="../comesivota">Come si vota</a></li>
+        <li><a href="../#hero">Home</a></li>
+        <li><a href="../#about">Scopri di più</a></li>
+        <li><a href="{{ site.url }}/#candidati">Chi siamo</a></li>
+        <li class="dropdown">
+          <a href="#candidati">
+            <span>Chi siamo</span>
+            <i class="bi bi-chevron-down toggle-dropdown"></i>
+          </a>
+          <ul>
+            <li><a href="{{ site.url }}#candidati" class="active">candidati</a></li>
+            <li><a href="{{ site.url }}/comesivota">come votarci</a>
+          </ul>
+        </li>
         <li class="dropdown">
           <a href="#">
             <span>Partecipa</span>
