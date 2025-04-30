@@ -24,7 +24,7 @@
     <meta property="twitter:url" content="{{ site.url }}" />
     <meta property="twitter:title" content="{{ site.title }}" />
     <meta property="twitter:description" content="{{ site.description }}" />
-    <meta property="twitter:image" content="{{ site.preview }}" />
+    <meta property="twitter:image" content="{{site.url}}/{{ site.preview }}" />
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -181,28 +181,6 @@
     </div>
     <header id="header" class="header d-flex align-items-center fixed-top">
       <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-        <!-- Cookie Policy -->
-        <div class="modal fade" id="cookie" tabindex="-1" role="dialog" aria-labelledby="titoloModale"
-          aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="titoloModale">Cookie Policy</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi">
-                </button>
-              </div>
-              <div class="modal-body">
-                <p class="text-left">
-                  Questo sito non utilizza cookie.<br />
-                  Durante la navigazione su questo sito non viene installato alcun cookie sul tuo dispositivo.<br />
-                  Non viene raccolto, memorizzzato o tracciato alcun tipo di informazione personale tramite cookie o
-                  altre tecnologie di tracciamento.<br />
-                  Grazie per la tua visita!
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
         <a href="../index.html" class="logo d-flex align-items-center">
           <!-- Uncomment the line below if you also wish to use an image logo -->
           <img src="/assets/img/logo.png" alt="">
@@ -354,7 +332,8 @@
                   <button onclick="nextSlide()">&#10095;</button>
                 </div>
                 <h1>Votare le nostre candidate e candidati</h1>
-                <p>Si possono scrivere fino a due nomi vicino al simbolo della lista</p>
+                <p>Si possono scrivere fino a due nomi vicino al simbolo della lista<br/>
+                Sono ammessi nomi di candidati dello stesso genere.</p>
                 <svg viewBox="0 0 138.62207 48.725876" version="1.1" id="svg1612" preserveAspectRatio="xMidYMid meet"
                   class="img-fluid" style="max-height: 150px;min-width: 300px; width: 100%; height: auto;">
                   <defs id="defs1609">
