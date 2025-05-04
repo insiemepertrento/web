@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Mappa sezioni elettorali - Trento</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
+  <style>
+    body { margin: 0; }
+    #map { width: 100vw; height: 100vh; }
+    #tooltip {
+      position: absolute;
+      display: none;
+      padding: 4px;
+      background: white;
+      border: 1px solid gray;
+      border-radius: 3px;
+      font-family: sans-serif;
+      font-size: 12px;
+      pointer-events: none;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<div id="legend" style="position:absolute;bottom:10px;left:10px;background:white;padding:10px;border-radius:5px;box-shadow:0 0 5px rgba(0,0,0,0.3);max-height:300px;overflow:auto;font-family:sans-serif;font-size:12px;z-index:5">
+<b>Legenda sezioni</b><br/>
+<select id="sezione-select" multiple style="width:100%;margin-bottom:5px;">
+  <option value="all">(Mostra tutte)</option>
+</select>
+<table id="legend-table">
+<tr><th>Sezione</th><th>Colore</th></tr>
+</table>
+</div>
+<div id="tooltip"></div>
+
+<script type="text/javascript">
+  let protocol = new pmtiles.Protocol({ metadata: true });
+  maplibregl.addProtocol("pmtiles", protocol.tile);
+
+  const coloriSezioni = new Map(Object.entries({40: '#FF6347', 22: '#FFF8DC', 34: '#32CD32', 32: '#A0522D', 44: '#87CEEB', 52: '#FFF5EE', 37: '#6A5ACD', 17: '#FF8C00', 8: '#00FF7F', 6: '#4169E1', 36: '#9370DB', 4: '#C71585', 18: '#800000', 3: '#FF1493', 5: '#9400D3', 10: '#8B0000', 35: '#FFFFE0', 9: '#696969', 33: '#FFA500', 25: '#66CDAA', 20: '#6B8E23', 23: '#E6E6FA', 2: '#F5DEB3', 31: '#FAEBD7', 16: '#800080', 45: '#B0E0E6', 1: '#2E8B57', 14: '#FF0000', 13: '#778899', 12: '#4682B4', 7: '#98FB98', 76: '#FFFFFF', 24: '#FFDAB9', 28: '#00CED1', 21: '#FFF0F5', 27: '#7B68EE', 29: '#FFE4E1', 41: '#0000CD', 11: '#FF7F50', 46: '#D3D3D3', 43: '#00FF00', 39: '#4B0082', 94: '#E0FFFF', 38: '#00BFFF', 63: '#7CFC00', 15: '#FFFAFA', 47: '#FFB6C1', 26: '#2F4F4F', 19: '#AFEEEE', 30: '#F0FFFF', 42: '#6495ED', 66: '#006400', 86: '#FFFFF0', 97: '#FFD700', 59: '#00FFFF', 70: '#DAA520', 92: '#7FFF00', 88: '#7FFFD4', 84: '#FFFACD', 72: '#DCDCDC', 55: '#808080', 91: '#ADD8E6', 89: '#8B4513', 90: '#9ACD32', 85: '#90EE90', 81: '#000080', 87: '#708090', 93: '#20B2AA', 67: '#9932CC', 68: '#FFE4B5', 69: '#00008B', 71: '#0000FF', 65: '#8FBC8F', 64: '#40E0D0', 50: '#FF4500', 51: '#228B22', 53: '#663399', 61: '#3CB371', 60: '#FFDEAD', 62: '#FFC0CB', 58: '#FFEFD5', 56: '#708090', 75: '#FF00FF', 54: '#191970', 57: '#48D1CC', 98: '#556B2F', 78: '#FAF0E6', 77: '#FDF5E6', 79: '#D2B48C', 80: '#A9A9A9', 96: '#D3D3D3', 83: '#FFFAF0', 82: '#778899', 73: '#B0C4DE', 74: '#2F4F4F', 95: '#F5F5F5'}).map(([k,v]) => [parseInt(k), v]));
+
+  const map = new maplibregl.Map({
+    container: "map",
+    style: "https://tiles.openfreemap.org/styles/liberty",
+    center: [11.121, 46.07],
+    zoom: 13
+  });
+
+  function buildColorExpression(activeList) {
+    const expr = ["match", ["get", "sez_elett"]];
+    coloriSezioni.forEach((col, key) => {
+      if (!activeList || activeList.includes("all") || activeList.length === 0 || activeList.includes(key.toString())) {
+        expr.push(key, col);
+      } else {
+        expr.push(key, "rgba(0,0,0,0)");
+      }
+    });
+    expr.push("rgba(0,0,0,0)");
+    return expr;
+  }
+
+  map.on("load", () => {
+    map.addSource("sezioni_elettorali", {
+      type: "vector",
+      url: "pmtiles://sezioni_elettorali.pmtiles"
+    });
+
+    map.addLayer({
+      id: "sezioni_elettorali_layer",
+      type: "circle",
+      source: "sezioni_elettorali",
+      "source-layer": "sezioni",
+      paint: {
+        "circle-radius": 5,
+        "circle-color": buildColorExpression(["all"])
+      }
+    });
+
+    const legendTable = document.getElementById("legend-table");
+    const select = document.getElementById("sezione-select");
+
+    coloriSezioni.forEach((col, sez) => {
+      const opt = document.createElement("option");
+      opt.value = sez;
+      opt.textContent = "Sezione " + sez;
+      select.appendChild(opt);
+
+      const row = document.createElement("tr");
+      row.innerHTML = `<td>${sez}</td><td style='background:${col};width:50px'>&nbsp;</td>`;
+      legendTable.appendChild(row);
+    });
+
+    select.addEventListener("change", () => {
+      const selected = Array.from(select.selectedOptions).map(opt => opt.value);
+      const newExpr = buildColorExpression(selected);
+      map.setPaintProperty("sezioni_elettorali_layer", "circle-color", newExpr);
+    });
+
+    const tooltip = document.getElementById("tooltip");
+    map.on("mousemove", "sezioni_elettorali_layer", e => {
+      const props = e.features[0].properties;
+      tooltip.innerHTML = `<b>Sezione:</b> ${props.sez_elett}<br/><b>Sede:</b> ${props.sede}`;
+      tooltip.style.display = "block";
+      tooltip.style.left = (e.originalEvent.pageX + 10) + "px";
+      tooltip.style.top = (e.originalEvent.pageY + 10) + "px";
+    });
+    map.on("mouseleave", "sezioni_elettorali_layer", () => {
+      tooltip.style.display = "none";
+    });
+  });
+</script>
+</body>
+</html>
