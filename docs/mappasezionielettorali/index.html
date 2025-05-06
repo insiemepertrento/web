@@ -1,407 +1,526 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>Mappa sezioni elettorali - Trento</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css" rel="stylesheet" />
-  <script src="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.js"></script>
-  <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
-  <style>
-    body { margin: 0; }
-    #map { width: 100vw; height: 100vh; }
-    #controls, #legend {
-      position: absolute;
-      background: white;
-      padding: 10px;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-      font-family: sans-serif;
-      font-size: 12px;
-      z-index: 10;
-    }
-    #controls { top: 10px; left: 10px; }
-    #legend { bottom: 10px; left: 10px; max-height: 300px; overflow: auto; z-index: 5; }
-    #tooltip {
-      position: absolute;
-      display: none;
-      padding: 4px;
-      background: white;
-      border: 1px solid gray;
-      border-radius: 3px;
-      font-family: sans-serif;
-      font-size: 12px;
-      pointer-events: none;
-      z-index: 10;
-    }
-  </style>
-</head>
-<body>
-  <div id="loading" style="position:absolute;top:10px;right:10px;background:white;padding:6px 12px;border-radius:4px;box-shadow:0 0 5px rgba(0,0,0,0.3);font-family:sans-serif;font-size:13px;z-index:20">⏳ Caricamento in corso...</div>
-  <div id="map"></div>
-  <div id="controls">
-    <b>Filtra per:</b><br />
-    <label>🏛 Circoscrizione:</label><br />
-    <select id="select-circoscrizione"></select><br />
-    <label>🏫 Sede:</label><br />
-    <select id="select-sede" disabled></select><br />
-    <label>🗳 Sezione:</label><br />
-    <select id="select-sezione" disabled></select><br />
-    <button id="reset-button">Reset filtri</button><br />
-    <button id="fit-button">🗺️ Inquadra tutto</button>
-    <br /><div id="status" style="margin-top:5px;color:#555;"></div>
-  </div>
-  <div id="legend"></div>
-  <div id="tooltip"></div>
+<html lang="it">
 
-  <script>
-    let protocol = new pmtiles.Protocol({ metadata: true });
-    maplibregl.addProtocol("pmtiles", protocol.tile);
+  <head>
+    <meta charset="utf-8" />
+    <title>Mappa sezioni elettorali - Trento</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- MapLibre -->
+    <link href="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/maplibre-gl@4.7.0/dist/maplibre-gl.js"></script>
+    <script src="https://unpkg.com/pmtiles@4.3.0/dist/pmtiles.js"></script>
 
-    const map = new maplibregl.Map({
-      container: "map",
-      style: "https://tiles.openfreemap.org/styles/liberty",
-      center: [11.121, 46.07],
-      zoom: 13
-    });
-    map.addControl(new maplibregl.NavigationControl(), "top-right");
-
-    const coloreSezione = "#800080";
-    const coloriCircoscrizioni = {}, coloriSedi = {}, coloriSezioni = {};
-
-    const selectC = document.getElementById("select-circoscrizione");
-    const selectS = document.getElementById("select-sede");
-    const selectZ = document.getElementById("select-sezione");
-    const resetButton = document.getElementById("reset-button");
-    const fitButton = document.getElementById("fit-button");
-    const legendDiv = document.getElementById("legend");
-    const statusDiv = document.getElementById("status");
-    const tooltip = document.getElementById("tooltip");
-
-    let allFeatures = [];
-    let defaultCamera = null;
-
-    const generaColore = () => `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
-
-    const aggiornaLegenda = () => {
-      const count = filterFeatures({ circ: selectC.value, sede: selectS.value, sezione: selectZ.value }).length;
-      statusDiv.textContent = count + (count === 1 ? " punto trovato" : " punti trovati");
-
-      legendDiv.innerHTML = "<b>Legenda</b><br/>";
-      const circ = selectC.value;
-      const sede = selectS.value;
-      const sez = selectZ.value;
-
-      if (sez) {
-        const f = allFeatures.find(f => f.properties.sez_elett == sez);
-        if (f) {
-          const c = f.properties.circoscrizione;
-          legendDiv.innerHTML += `<div><span style='background:${coloriCircoscrizioni[c]};width:12px;height:12px;display:inline-block;margin-right:5px;'></span>Sezione ${sez} (${c})</div>`;
-        }
-      } else if (sede) {
-        const features = filterFeatures({ sede });
-        const sezioni = [...new Set(features.map(f => f.properties.sez_elett))];
-        sezioni.sort((a, b) => a - b).forEach(sez => {
-          if (coloriSezioni[sez]) {
-            legendDiv.innerHTML += `<div><span style='background:${coloriSezioni[sez]};width:12px;height:12px;display:inline-block;margin-right:5px;'></span>Sezione ${sez}</div>`;
-          }
-        });
-      } else if (circ) {
-        const features = filterFeatures({ circ });
-        const sedi = [...new Set(features.map(f => f.properties.sede))];
-        sedi.sort().forEach(s => {
-          if (coloriSedi[s]) {
-            legendDiv.innerHTML += `<div><span style='background:${coloriSedi[s]};width:12px;height:12px;display:inline-block;margin-right:5px;'></span>${s}</div>`;
-          }
-        });
-      } else {
-        Object.entries(coloriCircoscrizioni).sort().forEach(([nome, colore]) => {
-          legendDiv.innerHTML += `<div><span style='background:${colore};width:12px;height:12px;display:inline-block;margin-right:5px;'></span>${nome}</div>`;
-        });
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet">
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
       }
-    };
 
-    const aggiornaSelect = (select, values, disabled) => {
-      select.innerHTML = "";
-      select.disabled = disabled;
-      const optAll = document.createElement("option");
-      optAll.value = "";
-      optAll.textContent = "-- Vedi tutte --";
-      select.appendChild(optAll);
-      if (!disabled) {
-        values.sort((a, b) => (!isNaN(a) && !isNaN(b)) ? a - b : a.localeCompare(b)).forEach(val => {
-          const opt = document.createElement("option");
-          opt.value = val;
-          opt.textContent = val;
-          select.appendChild(opt);
-        });
+      body {
+        display: flex;
+        flex-direction: column;
+        font-family: "Poppins", "Roboto", "Raleway", sans-serif;
       }
-    };
 
-    const coloreCircoscrizioneExpr = () => {
-      const expr = ["match", ["get", "circoscrizione"]];
-      Object.entries(coloriCircoscrizioni).forEach(([k, v]) => expr.push(k, v));
-      // Forza almeno 2 coppie per evitare errore MapLibre
-      expr.push("__dummy__", "rgba(0,0,0,0)");
-      expr.push("rgba(0,0,0,0)");
-      return expr;
-    };
+      main {
+        flex-grow: 1;
+        position: relative;
+      }
 
-    const filterFeatures = (filter) => {
-      return allFeatures.filter(f => {
-        return (!filter.circ || f.properties.circoscrizione === filter.circ) &&
-               (!filter.sede || f.properties.sede === filter.sede) &&
-               (!filter.sezione || f.properties.sez_elett == filter.sezione);
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      #controls,
+      #legend,
+      #tooltip,
+      #loading {
+        position: absolute;
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        font-family: sans-serif;
+        font-size: 12px;
+        z-index: 1000;
+      }
+
+      #controls {
+        top: 70px;
+        left: 10px;
+      }
+
+      #legend {
+        bottom: 70px;
+        left: 10px;
+        max-height: 300px;
+        overflow: auto;
+      }
+
+      #tooltip {
+        display: none;
+        padding: 4px;
+        background: white;
+        border: 1px solid gray;
+        border-radius: 3px;
+        pointer-events: none;
+      }
+
+      #loading {
+        top: 70px;
+        right: 10px;
+        font-size: 13px;
+      }
+
+      .maplibregl-ctrl-top-right {
+        top: 70px !important;
+      }
+
+      .navbar-custom,
+      .footer-custom {
+        background-color: rgb(34, 128, 194);
+      }
+    </style>
+
+
+  </head>
+
+  <body>
+    <nav class="navbar navbar-dark navbar-custom fixed-top">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand mb-0 h1" href="#">Trento - Sezioni Elettorali</a>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#infoModal">ℹ️ Info</button>
+          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#cookie">Cookie Policy</button>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <div id="map"></div>
+      <div id="loading">⏳ Caricamento in corso...</div>
+      <div id="controls">
+        <b>Filtra per:</b><br />
+        <label>🏛 Circoscrizione:</label><br />
+        <select id="select-circoscrizione"></select><br />
+        <label>🏫 Sede:</label><br />
+        <select id="select-sede" disabled></select><br />
+        <label>🗳 Sezione:</label><br />
+        <select id="select-sezione" disabled></select><br />
+        <button id="reset-button">Reset filtri</button><br />
+        <button id="fit-button">🗺️ Inquadra tutto</button>
+        <br />
+        <div id="status" style="margin-top:5px;color:#555;"></div>
+      </div>
+      <div id="legend"></div>
+      <div id="tooltip"></div>
+    </main>
+    <footer class="footer-custom text-light text-start px-3 py-2 fixed-bottom">
+      <small>&copy; Open Data del Comune di Trento - Mappa da OpenStreetMap</small>
+    </footer>
+    <div class="modal fade" id="cookie" tabindex="-1" role="dialog" aria-labelledby="cookieTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cookieTitle">Cookie Policy</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+          </div>
+          <div class="modal-body">
+            <p>Questa pagina non utilizza cookie di profilazione.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="infoTitle" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="infoTitle">Informazioni</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+          </div>
+          <div class="modal-body">
+            <p class="text-left">
+              <p>
+              Questa pagina mostra il raggruppamento dei numeri civici per sezione elettorale del Comune di Trento a maggio 2025<br />
+              Ogni sezione a sua volta ha un plesso (la sede dove si va a votare) e fa parte di una circoscrizione.<br />
+              I dati dei <A href="https://www.comune.trento.it/Aree-tematiche/Cartografia/Download/Civici-con-Sezione-Elettorale">numeri civici con sezione elettorale</A> si trovano nel portale <a href="https://www.comune.trento.it/Aree-tematiche/Open-Data/Tipologie-di-dati/Tutti-gli-open-data" target="_new">Open Data</a> del <a href="https://www.comune.trento.it/"></a>Comune di Trento</a> e sono rilasciati in CC0<br/>
+            </p>
+            <p class="small">
+              <strong>nota tecnica</strong><br/>
+              i dati sono stati convertiti in format pmtiles e resi accessibili tramite questa applicazione web.<br/>
+              la scelta colori è generata in maniera casuale ogni volta, quindi, se non piacciono, basta ricaricare la pagina<br/>
+              Per maggiori informazioni contattare <a href="https://github.com/napo" target="_blank">@napo</a>.
+              </p>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- JavaScript della mappa -->
+    <script>
+      let protocol = new pmtiles.Protocol({ metadata: true });
+      maplibregl.addProtocol("pmtiles", protocol.tile);
+
+      const map = new maplibregl.Map({
+        container: "map",
+        style: "https://tiles.openfreemap.org/styles/liberty",
+        center: [11.121, 46.07],
+        zoom: 13
       });
-    };
+      map.addControl(new maplibregl.NavigationControl(), "top-right");
 
-    const aggiornaMappa = (expr) => {
-      map.setPaintProperty("sezioni_elettorali_layer", "circle-color", expr);
-    };
+      const coloreSezione = "#800080";
+      const coloriCircoscrizioni = {}, coloriSedi = {}, coloriSezioni = {};
 
-    const aggiornaFiltriDaCircoscrizione = (circ) => {
-      const filtrati = filterFeatures({ circ });
-      const sedi = [...new Set(filtrati.map(f => f.properties.sede))];
-      const sezioni = [...new Set(filtrati.map(f => f.properties.sez_elett))];
-      aggiornaSelect(selectS, sedi, false);
-      aggiornaSelect(selectZ, sezioni.sort((a, b) => a - b), false);
+      const selectC = document.getElementById("select-circoscrizione");
+      const selectS = document.getElementById("select-sede");
+      const selectZ = document.getElementById("select-sezione");
+      const resetButton = document.getElementById("reset-button");
+      //const fitButton = document.getElementById("fit-button");
+      const legendDiv = document.getElementById("legend");
+      const statusDiv = document.getElementById("status");
+      const tooltip = document.getElementById("tooltip");
 
-      const expr = ["match", ["get", "sede"]];
-      sedi.forEach(s => {
-        if (!coloriSedi[s]) {
-          const f = filtrati.find(f => f.properties.sede === s);
-          const base = coloriCircoscrizioni[f.properties.circoscrizione].replace('#','');
-          const r = Math.min(255, parseInt(base.substring(0,2),16) + 40);
-          const g = Math.min(255, parseInt(base.substring(2,4),16) + 40);
-          const b = Math.min(255, parseInt(base.substring(4,6),16) + 40);
-          coloriSedi[s] = `rgb(${r},${g},${b})`;
-        }
-        expr.push(s, coloriSedi[s]);
-      });
-      expr.push("rgba(0,0,0,0)");
-      aggiornaMappa(expr);
-    };
+      let allFeatures = [];
+      let defaultCamera = null;
 
-    const aggiornaFiltriDaSede = (sede) => {
-  if (!sede) {
-    const allCirc = [...new Set(allFeatures.map(f => f.properties.circoscrizione))];
-    aggiornaSelect(selectC, allCirc, false);
-    aggiornaSelect(selectZ, [], true);
-    aggiornaMappa(coloreCircoscrizioneExpr());
-    return;
-  }
-  const filtrati = filterFeatures({ sede });
-  const circ = [...new Set(filtrati.map(f => f.properties.circoscrizione))];
-  const sezioni = [...new Set(filtrati.map(f => f.properties.sez_elett))];
-  aggiornaSelect(selectC, circ, false);
-  aggiornaSelect(selectZ, sezioni.sort((a, b) => a - b), false);
+      const generaColore = () => `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0')}`;
 
-  const expr = ["match", ["get", "sez_elett"]];
-  sezioni.forEach(sez => {
-    if (!coloriSezioni[sez]) {
-      const f = filtrati.find(f => f.properties.sez_elett === sez);
-      const base = coloriSedi[f.properties.sede].replace(/rgb\(|\)/g, '').split(',').map(Number);
-      const r = Math.min(255, base[0] + 40);
-      const g = Math.min(255, base[1] + 40);
-      const b = Math.min(255, base[2] + 40);
-      coloriSezioni[sez] = `rgb(${r},${g},${b})`;
-    }
-    expr.push(sez, coloriSezioni[sez]);
-  });
-  // Forza almeno due coppie valore-colore per evitare errori
-  expr.push(-9999, "rgba(0,0,0,0)");
-  expr.push("rgba(0,0,0,0)");
-      aggiornaMappa(expr);
-    };
+      const aggiornaLegenda = () => {
+        const count = filterFeatures({ circ: selectC.value, sede: selectS.value, sezione: selectZ.value }).length;
+        statusDiv.textContent = count + (count === 1 ? " punto trovato" : " punti trovati");
 
-    const aggiornaDaSezione = (sezione) => {
-  const id = parseInt(sezione);
-  if (isNaN(id)) return;
+        legendDiv.innerHTML = "<b>Legenda</b><br/>";
+        const circ = selectC.value;
+        const sede = selectS.value;
+        const sez = selectZ.value;
 
-  // Trova il primo punto della sezione per recuperare le coordinate
-  const f = allFeatures.find(f => f.properties.sez_elett == id);
-  if (!f) return;
-
-  // Calcolare il bounding box per la sezione
-  const allCoords = allFeatures.filter(f => f.properties.sez_elett == id).map(f => f.geometry.coordinates);
-  const bounds = allCoords.reduce((b, c) => b.extend(c), new maplibregl.LngLatBounds(allCoords[0], allCoords[0]));
-
-  // Esegui lo zoom sui punti della sezione
-  map.fitBounds(bounds, { padding: 40 });
-
-  // Ripristina la colorazione per la sezione
-  const colore = coloriCircoscrizioni[f.properties.circoscrizione] || coloreSezione;
-  aggiornaMappa(["match", ["get", "sez_elett"], id, colore, -9999, "rgba(0,0,0,0)", "rgba(0,0,0,0)"]);
-
-  // Aggiorna la legenda con il colore della sezione
-  aggiornaLegenda();
-};
-
-/*
-const aggiornaDaSezione = (sezione) => {
-  const id = parseInt(sezione);
-  if (isNaN(id)) return;
-
-  const f = allFeatures.find(f => f.properties.sez_elett == id);
-  if (!f) return;
-
-  const coord = f.geometry.coordinates;
-
-  // Calcolo del bounding box per la sezione
-  const allCoords = allFeatures.filter(f => f.properties.sez_elett == id).map(f => f.geometry.coordinates);
-  const bounds = allCoords.reduce((b, c) => b.extend(c), new maplibregl.LngLatBounds(allCoords[0], allCoords[0]));
-
-  // Applicare lo zoom alla mappa
-  map.fitBounds(bounds, { padding: 40 });
-
-  // Aggiorna la mappa con il colore della circoscrizione per la sezione
-  const colore = coloriCircoscrizioni[f.properties.circoscrizione] || coloreSezione;
-  aggiornaMappa(["match", ["get", "sez_elett"], id, colore, -9999, "rgba(0,0,0,0)", "rgba(0,0,0,0)"]);
-};
-*/
-
-    resetButton.addEventListener("click", () => {
-      statusDiv.textContent = "";
-      selectC.value = "";
-      selectS.value = "";
-      selectZ.value = "";
-      aggiornaSelect(selectS, [], true);
-      aggiornaSelect(selectZ, [], true);
-      aggiornaLegenda();
-      aggiornaMappa(coloreCircoscrizioneExpr());
-    });
-
-    selectC.addEventListener("change", () => {
-      const val = selectC.value;
-      selectS.value = "";
-      selectZ.value = "";
-      aggiornaSelect(selectS, [], true);
-      aggiornaSelect(selectZ, [], true);
-      if (!val) {
-        aggiornaLegenda();
-        aggiornaMappa(coloreCircoscrizioneExpr());
-        return;
-      }
-      aggiornaFiltriDaCircoscrizione(val);
-      aggiornaLegenda();
-
-      // Zoom ai bounds della circoscrizione filtrata
-      const filtrati = filterFeatures({ circ: val });
-      if (filtrati.length > 0) {
-        const coords = filtrati.map(f => f.geometry.coordinates);
-        const bounds = coords.reduce((b, c) => b.extend(c), new maplibregl.LngLatBounds(coords[0], coords[0]));
-        map.fitBounds(bounds, { padding: 40 });
-      }
-    });
-
-    fitButton.addEventListener("click", () => {
-      if (defaultCamera) {
-        map.setCenter(defaultCamera.center);
-        map.setZoom(defaultCamera.zoom);
-      }
-    });
-
-    selectS.addEventListener("change", () => {
-      const val = selectS.value;
-      selectZ.value = "";
-      aggiornaSelect(selectZ, [], true);
-      if (!val) {
-        const circoscrizioni = [...new Set(allFeatures.map(f => f.properties.circoscrizione))];
-        aggiornaSelect(selectC, circoscrizioni, false);
-        aggiornaLegenda();
-        aggiornaMappa(coloreCircoscrizioneExpr());
-        return;
-      }
-      aggiornaFiltriDaSede(val);
-      aggiornaLegenda();
-      const filtrati = filterFeatures({ sede: val });
-      if (filtrati.length > 0) {
-        const coords = filtrati.map(f => f.geometry.coordinates);
-        const bounds = coords.reduce((b, c) => b.extend(c), new maplibregl.LngLatBounds(coords[0], coords[0]));
-        map.fitBounds(bounds, { padding: 40 });
-      }
-    });
-
-    selectZ.addEventListener("change", () => {
-      const val = selectZ.value;
-      if (!val) {
-        if (selectS.value) {
-          aggiornaFiltriDaSede(selectS.value);
-        } else if (selectC.value) {
-          aggiornaFiltriDaCircoscrizione(selectC.value);
+        if (sez) {
+          const f = allFeatures.find(f => f.properties.sez_elett == sez);
+          if (f) {
+            const c = f.properties.circoscrizione;
+            legendDiv.innerHTML += `<div><span style='background:${coloriCircoscrizioni[c]};width:12px;height:12px;display:inline-block;margin-right:5px;'></span>Sezione ${sez} (${c})</div>`;
+          }
+        } else if (sede) {
+          const features = filterFeatures({ sede });
+          const sezioni = [...new Set(features.map(f => f.properties.sez_elett))];
+          sezioni.sort((a, b) => a - b).forEach(sez => {
+            if (coloriSezioni[sez]) {
+              legendDiv.innerHTML += `<div><span style='background:${coloriSezioni[sez]};width:12px;height:12px;display:inline-block;margin-right:5px;'></span>Sezione ${sez}</div>`;
+            }
+          });
+        } else if (circ) {
+          const features = filterFeatures({ circ });
+          const sedi = [...new Set(features.map(f => f.properties.sede))];
+          sedi.sort().forEach(s => {
+            if (coloriSedi[s]) {
+              legendDiv.innerHTML += `<div><span style='background:${coloriSedi[s]};width:12px;height:12px;display:inline-block;margin-right:5px;'></span>${s}</div>`;
+            }
+          });
         } else {
-          aggiornaMappa(coloreCircoscrizioneExpr());
+          Object.entries(coloriCircoscrizioni).sort().forEach(([nome, colore]) => {
+            legendDiv.innerHTML += `<div><span style='background:${colore};width:12px;height:12px;display:inline-block;margin-right:5px;'></span>${nome}</div>`;
+          });
         }
-        aggiornaLegenda();
-        return;
-      }
-      aggiornaDaSezione(val);
-      aggiornaLegenda();
-      const f = allFeatures.find(f => f.properties.sez_elett == val);
-      if (f) {
-        const coord = f.geometry.coordinates;
-        map.flyTo({ center: coord, zoom: 16 });
-      }
-    });
+      };
 
-    map.on("load", async () => {
-      const pmtilesSource = new pmtiles.PMTiles("sezioni_elettorali.pmtiles");
-      const header = await pmtilesSource.getHeader();
-      const fullBounds = [
-        [header.minLon, header.minLat],
-        [header.maxLon, header.maxLat]
-      ];
-      const camera = map.cameraForBounds(fullBounds, { padding: 20 });
-      if (camera) {
-        map.setCenter(camera.center);
-        const reducedZoom = Math.max(camera.zoom - 1, map.getMinZoom());
-        map.setZoom(reducedZoom);
-        const maxBounds = map.getBounds();
-        map.setMaxBounds(maxBounds);
-        defaultCamera = {
-          center: map.getCenter(),
-          zoom: map.getZoom(),
-          bounds: map.getBounds()
-        };
-      }
+      const aggiornaSelect = (select, values, disabled) => {
+        select.innerHTML = "";
+        select.disabled = disabled;
+        const optAll = document.createElement("option");
+        optAll.value = "";
+        optAll.textContent = "-- Vedi tutte --";
+        select.appendChild(optAll);
+        if (!disabled) {
+          values.sort((a, b) => (!isNaN(a) && !isNaN(b)) ? a - b : a.localeCompare(b)).forEach(val => {
+            const opt = document.createElement("option");
+            opt.value = val;
+            opt.textContent = val;
+            select.appendChild(opt);
+          });
+        }
+      };
 
-      map.addSource("sezioni_elettorali", {
-        type: "vector",
-        url: "pmtiles://sezioni_elettorali.pmtiles"
-      });
-      map.addLayer({
-        id: "sezioni_elettorali_layer",
-        type: "circle",
-        source: "sezioni_elettorali",
-        "source-layer": "sezioni",
-        paint: { "circle-radius": 5, "circle-color": "rgba(0,0,0,0)" }
-      });
+      const coloreCircoscrizioneExpr = () => {
+        const expr = ["match", ["get", "circoscrizione"]];
+        Object.entries(coloriCircoscrizioni).forEach(([k, v]) => expr.push(k, v));
+        // Forza almeno 2 coppie per evitare errore MapLibre
+        expr.push("__dummy__", "rgba(0,0,0,0)");
+        expr.push("rgba(0,0,0,0)");
+        return expr;
+      };
 
-      map.once("idle", () => {
-        document.getElementById("loading").style.display = "none";
-        allFeatures = map.queryRenderedFeatures({ layers: ["sezioni_elettorali_layer"] });
-        allFeatures.forEach(f => {
-          const { circoscrizione } = f.properties;
-          if (!coloriCircoscrizioni[circoscrizione]) coloriCircoscrizioni[circoscrizione] = generaColore();
+      const filterFeatures = (filter) => {
+        return allFeatures.filter(f => {
+          return (!filter.circ || f.properties.circoscrizione === filter.circ) &&
+            (!filter.sede || f.properties.sede === filter.sede) &&
+            (!filter.sezione || f.properties.sez_elett == filter.sezione);
         });
-        const circoscrizioni = [...new Set(allFeatures.map(f => f.properties.circoscrizione))];
-        aggiornaSelect(selectC, circoscrizioni, false);
+      };
+
+      const aggiornaMappa = (expr) => {
+        map.setPaintProperty("sezioni_elettorali_layer", "circle-color", expr);
+      };
+
+      const aggiornaFiltriDaCircoscrizione = (circ) => {
+        const filtrati = filterFeatures({ circ });
+        const sedi = [...new Set(filtrati.map(f => f.properties.sede))];
+        const sezioni = [...new Set(filtrati.map(f => f.properties.sez_elett))];
+        aggiornaSelect(selectS, sedi, false);
+        aggiornaSelect(selectZ, sezioni.sort((a, b) => a - b), false);
+
+        const expr = ["match", ["get", "sede"]];
+        sedi.forEach(s => {
+          if (!coloriSedi[s]) {
+            const f = filtrati.find(f => f.properties.sede === s);
+            const base = coloriCircoscrizioni[f.properties.circoscrizione].replace('#', '');
+            const r = Math.min(255, parseInt(base.substring(0, 2), 16) + 40);
+            const g = Math.min(255, parseInt(base.substring(2, 4), 16) + 40);
+            const b = Math.min(255, parseInt(base.substring(4, 6), 16) + 40);
+            coloriSedi[s] = `rgb(${r},${g},${b})`;
+          }
+          expr.push(s, coloriSedi[s]);
+        });
+        expr.push("rgba(0,0,0,0)");
+        aggiornaMappa(expr);
+      };
+
+      const aggiornaFiltriDaSede = (sede) => {
+        if (!sede) {
+          const allCirc = [...new Set(allFeatures.map(f => f.properties.circoscrizione))];
+          aggiornaSelect(selectC, allCirc, false);
+          aggiornaSelect(selectZ, [], true);
+          aggiornaMappa(coloreCircoscrizioneExpr());
+          return;
+        }
+        const filtrati = filterFeatures({ sede });
+        const circ = [...new Set(filtrati.map(f => f.properties.circoscrizione))];
+        const sezioni = [...new Set(filtrati.map(f => f.properties.sez_elett))];
+        aggiornaSelect(selectC, circ, false);
+        aggiornaSelect(selectZ, sezioni.sort((a, b) => a - b), false);
+
+        const expr = ["match", ["get", "sez_elett"]];
+        sezioni.forEach(sez => {
+          if (!coloriSezioni[sez]) {
+            const f = filtrati.find(f => f.properties.sez_elett === sez);
+            const base = coloriSedi[f.properties.sede].replace(/rgb\(|\)/g, '').split(',').map(Number);
+            const r = Math.min(255, base[0] + 40);
+            const g = Math.min(255, base[1] + 40);
+            const b = Math.min(255, base[2] + 40);
+            coloriSezioni[sez] = `rgb(${r},${g},${b})`;
+          }
+          expr.push(sez, coloriSezioni[sez]);
+        });
+        // Forza almeno due coppie valore-colore per evitare errori
+        expr.push(-9999, "rgba(0,0,0,0)");
+        expr.push("rgba(0,0,0,0)");
+        aggiornaMappa(expr);
+      };
+
+      const aggiornaDaSezione = (sezione) => {
+        const id = parseInt(sezione);
+        if (isNaN(id)) return;
+
+        // Trova il primo punto della sezione per recuperare le coordinate
+        const f = allFeatures.find(f => f.properties.sez_elett == id);
+        if (!f) return;
+
+        // Calcolare il bounding box per la sezione
+        const allCoords = allFeatures.filter(f => f.properties.sez_elett == id).map(f => f.geometry.coordinates);
+        const bounds = allCoords.reduce((b, c) => b.extend(c), new maplibregl.LngLatBounds(allCoords[0], allCoords[0]));
+
+        // Esegui lo zoom sui punti della sezione
+        map.fitBounds(bounds, { padding: 40 });
+
+        // Ripristina la colorazione per la sezione
+        const colore = coloriCircoscrizioni[f.properties.circoscrizione] || coloreSezione;
+        aggiornaMappa(["match", ["get", "sez_elett"], id, colore, -9999, "rgba(0,0,0,0)", "rgba(0,0,0,0)"]);
+
+        // Aggiorna la legenda con il colore della sezione
+        aggiornaLegenda();
+      };
+
+      /*
+      const aggiornaDaSezione = (sezione) => {
+        const id = parseInt(sezione);
+        if (isNaN(id)) return;
+      
+        const f = allFeatures.find(f => f.properties.sez_elett == id);
+        if (!f) return;
+      
+        const coord = f.geometry.coordinates;
+      
+        // Calcolo del bounding box per la sezione
+        const allCoords = allFeatures.filter(f => f.properties.sez_elett == id).map(f => f.geometry.coordinates);
+        const bounds = allCoords.reduce((b, c) => b.extend(c), new maplibregl.LngLatBounds(allCoords[0], allCoords[0]));
+      
+        // Applicare lo zoom alla mappa
+        map.fitBounds(bounds, { padding: 40 });
+      
+        // Aggiorna la mappa con il colore della circoscrizione per la sezione
+        const colore = coloriCircoscrizioni[f.properties.circoscrizione] || coloreSezione;
+        aggiornaMappa(["match", ["get", "sez_elett"], id, colore, -9999, "rgba(0,0,0,0)", "rgba(0,0,0,0)"]);
+      };
+      */
+
+      resetButton.addEventListener("click", () => {
+        statusDiv.textContent = "";
+        selectC.value = "";
+        selectS.value = "";
+        selectZ.value = "";
+        aggiornaSelect(selectS, [], true);
+        aggiornaSelect(selectZ, [], true);
         aggiornaLegenda();
         aggiornaMappa(coloreCircoscrizioneExpr());
       });
-    });
 
-    map.on("mousemove", "sezioni_elettorali_layer", e => {
-      const props = e.features[0].properties;
-      tooltip.innerHTML = `<b>Sezione:</b> ${props.sez_elett}<br/><b>Sede:</b> ${props.sede}<br/><b>Circoscrizione:</b> ${props.circoscrizione}`;
-      tooltip.style.display = "block";
-      tooltip.style.left = (e.originalEvent.pageX + 10) + "px";
-      tooltip.style.top = (e.originalEvent.pageY + 10) + "px";
-    });
+      selectC.addEventListener("change", () => {
+        const val = selectC.value;
+        selectS.value = "";
+        selectZ.value = "";
+        aggiornaSelect(selectS, [], true);
+        aggiornaSelect(selectZ, [], true);
+        if (!val) {
+          aggiornaLegenda();
+          aggiornaMappa(coloreCircoscrizioneExpr());
+          return;
+        }
+        aggiornaFiltriDaCircoscrizione(val);
+        aggiornaLegenda();
 
-    map.on("mouseleave", "sezioni_elettorali_layer", () => {
-      tooltip.style.display = "none";
-    });
-  </script>
-</body>
+        // Zoom ai bounds della circoscrizione filtrata
+        const filtrati = filterFeatures({ circ: val });
+        if (filtrati.length > 0) {
+          const coords = filtrati.map(f => f.geometry.coordinates);
+          const bounds = coords.reduce((b, c) => b.extend(c), new maplibregl.LngLatBounds(coords[0], coords[0]));
+          map.fitBounds(bounds, { padding: 40 });
+        }
+      });
+      /*
+      fitButton.addEventListener("click", () => {
+        if (defaultCamera) {
+          map.setCenter(defaultCamera.center);
+          map.setZoom(defaultCamera.zoom);
+        }
+      });
+    */
+      selectS.addEventListener("change", () => {
+        const val = selectS.value;
+        selectZ.value = "";
+        aggiornaSelect(selectZ, [], true);
+        if (!val) {
+          const circoscrizioni = [...new Set(allFeatures.map(f => f.properties.circoscrizione))];
+          aggiornaSelect(selectC, circoscrizioni, false);
+          aggiornaLegenda();
+          aggiornaMappa(coloreCircoscrizioneExpr());
+          return;
+        }
+        aggiornaFiltriDaSede(val);
+        aggiornaLegenda();
+        const filtrati = filterFeatures({ sede: val });
+        if (filtrati.length > 0) {
+          const coords = filtrati.map(f => f.geometry.coordinates);
+          const bounds = coords.reduce((b, c) => b.extend(c), new maplibregl.LngLatBounds(coords[0], coords[0]));
+          map.fitBounds(bounds, { padding: 40 });
+        }
+      });
+
+      selectZ.addEventListener("change", () => {
+        const val = selectZ.value;
+        if (!val) {
+          if (selectS.value) {
+            aggiornaFiltriDaSede(selectS.value);
+          } else if (selectC.value) {
+            aggiornaFiltriDaCircoscrizione(selectC.value);
+          } else {
+            aggiornaMappa(coloreCircoscrizioneExpr());
+          }
+          aggiornaLegenda();
+          return;
+        }
+        aggiornaDaSezione(val);
+        aggiornaLegenda();
+        const f = allFeatures.find(f => f.properties.sez_elett == val);
+        if (f) {
+          const coord = f.geometry.coordinates;
+          map.flyTo({ center: coord, zoom: 16 });
+        }
+      });
+
+      map.on("load", async () => {
+        const pmtilesSource = new pmtiles.PMTiles("sezioni_elettorali.pmtiles");
+        const header = await pmtilesSource.getHeader();
+        const fullBounds = [
+          [header.minLon, header.minLat],
+          [header.maxLon, header.maxLat]
+        ];
+        const camera = map.cameraForBounds(fullBounds, { padding: 20 });
+        if (camera) {
+          map.setCenter(camera.center);
+          const reducedZoom = Math.max(camera.zoom - 1, map.getMinZoom());
+          map.setZoom(reducedZoom);
+          const maxBounds = map.getBounds();
+          map.setMaxBounds(maxBounds);
+          defaultCamera = {
+            center: map.getCenter(),
+            zoom: map.getZoom(),
+            bounds: map.getBounds()
+          };
+        }
+
+        map.addSource("sezioni_elettorali", {
+          type: "vector",
+          url: "pmtiles://sezioni_elettorali.pmtiles"
+        });
+        map.addLayer({
+          id: "sezioni_elettorali_layer",
+          type: "circle",
+          source: "sezioni_elettorali",
+          "source-layer": "sezioni",
+          paint: { "circle-radius": 5, "circle-color": "rgba(0,0,0,0)" }
+        });
+
+        map.once("idle", () => {
+          document.getElementById("loading").style.display = "none";
+          allFeatures = map.queryRenderedFeatures({ layers: ["sezioni_elettorali_layer"] });
+          allFeatures.forEach(f => {
+            const { circoscrizione } = f.properties;
+            if (!coloriCircoscrizioni[circoscrizione]) coloriCircoscrizioni[circoscrizione] = generaColore();
+          });
+          const circoscrizioni = [...new Set(allFeatures.map(f => f.properties.circoscrizione))];
+          aggiornaSelect(selectC, circoscrizioni, false);
+          aggiornaLegenda();
+          aggiornaMappa(coloreCircoscrizioneExpr());
+        });
+      });
+
+      map.on("mousemove", "sezioni_elettorali_layer", e => {
+        const props = e.features[0].properties;
+        tooltip.innerHTML = `<b>Sezione:</b> ${props.sez_elett}<br/><b>Sede:</b> ${props.sede}<br/><b>Circoscrizione:</b> ${props.circoscrizione}`;
+        tooltip.style.display = "block";
+        tooltip.style.left = (e.originalEvent.pageX + 10) + "px";
+        tooltip.style.top = (e.originalEvent.pageY + 10) + "px";
+      });
+
+      map.on("mouseleave", "sezioni_elettorali_layer", () => {
+        tooltip.style.display = "none";
+      });
+    </script>
+  </body>
 </html>
