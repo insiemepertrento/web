@@ -95,6 +95,24 @@
       .footer-custom {
         background-color: rgb(34, 128, 194);
       }
+
+      .modal-body a {
+        color: black;
+        text-decoration: none;
+      }
+
+      .modal-body a:hover {
+        text-decoration: underline dashed;
+      }
+
+      .footer-custom a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .footer-custom a:hover {
+        text-decoration: underline dashed;
+      }
     </style>
 
 
@@ -105,8 +123,10 @@
       <div class="container-fluid d-flex justify-content-between align-items-center">
         <a class="navbar-brand mb-0 h1" href="#">Trento - Sezioni Elettorali</a>
         <div class="d-flex gap-2">
-          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#infoModal">ℹ️ Info</button>
-          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#cookie">Cookie Policy</button>
+          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#infoModal">ℹ️
+            Info</button>
+          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#cookie">Cookie
+            Policy</button>
         </div>
       </div>
     </nav>
@@ -130,7 +150,8 @@
       <div id="tooltip"></div>
     </main>
     <footer class="footer-custom text-light text-start px-3 py-2 fixed-bottom">
-      <small>&copy; Open Data del Comune di Trento - Mappa da OpenStreetMap</small>
+      <small>&copy; Open Data del Comune di Trento - Mappa: OpenFreeMap &copy; OpenMapTiles Data from <A
+          href="https://www.openstreetmap.org/copyright">OpenStreetMap</A></small>
     </footer>
     <div class="modal fade" id="cookie" tabindex="-1" role="dialog" aria-labelledby="cookieTitle" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -154,17 +175,25 @@
           </div>
           <div class="modal-body">
             <p class="text-left">
-              <p>
-              Questa pagina mostra il raggruppamento dei numeri civici per sezione elettorale del Comune di Trento a maggio 2025<br />
-              Ogni sezione a sua volta ha un plesso (la sede dove si va a votare) e fa parte di una circoscrizione.<br />
-              I dati dei <A href="https://www.comune.trento.it/Aree-tematiche/Cartografia/Download/Civici-con-Sezione-Elettorale">numeri civici con sezione elettorale</A> si trovano nel portale <a href="https://www.comune.trento.it/Aree-tematiche/Open-Data/Tipologie-di-dati/Tutti-gli-open-data" target="_new">Open Data</a> del <a href="https://www.comune.trento.it/"></a>Comune di Trento</a> e sono rilasciati in CC0<br/>
+            <p>
+              Questa pagina mostra il raggruppamento dei numeri civici per sezione elettorale del Comune di Trento a
+              maggio 2025<br />
+              Ogni sezione a sua volta ha un plesso (la sede dove si va a votare) e fa parte di una
+              circoscrizione.<br />
+              I dati dei <A
+                href="https://www.comune.trento.it/Aree-tematiche/Cartografia/Download/Civici-con-Sezione-Elettorale">numeri
+                civici con sezione elettorale</A> si trovano nel portale <a
+                href="https://www.comune.trento.it/Aree-tematiche/Open-Data/Tipologie-di-dati/Tutti-gli-open-data"
+                target="_new">Open Data</a> del <a href="https://www.comune.trento.it/">Comune di Trento</a> e sono
+              rilasciati in CC0<br />
             </p>
             <p class="small">
-              <strong>nota tecnica</strong><br/>
-              i dati sono stati convertiti in format pmtiles e resi accessibili tramite questa applicazione web.<br/>
-              la scelta colori è generata in maniera casuale ogni volta, quindi, se non piacciono, basta ricaricare la pagina<br/>
+              <strong>nota tecnica</strong><br />
+              i dati sono stati convertiti in format pmtiles e resi accessibili tramite questa applicazione web.<br />
+              la scelta colori è generata in maniera casuale ogni volta, quindi, se non piacciono, basta ricaricare la
+              pagina<br />
               Per maggiori informazioni contattare <a href="https://github.com/napo" target="_blank">@napo</a>.
-              </p>
+            </p>
             </p>
           </div>
         </div>
@@ -523,4 +552,5 @@
       });
     </script>
   </body>
+
 </html>
