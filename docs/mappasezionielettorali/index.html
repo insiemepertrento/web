@@ -123,10 +123,8 @@
       <div class="container-fluid d-flex justify-content-between align-items-center">
         <a class="navbar-brand mb-0 h1" href="#">Trento - Sezioni Elettorali</a>
         <div class="d-flex gap-2">
-          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#infoModal">ℹ️
-            Info</button>
-          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#cookie">Cookie
-            Policy</button>
+          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#infoModal" aria-label="Informazioni sulla mappa">ℹ️ Info</button>
+          <button class="btn btn-outline-light btn-sm" data-bs-toggle="modal" data-bs-target="#cookie" aria-label="Informativa sui cookie">Cookie Policy</button>            Policy</button>
         </div>
       </div>
     </nav>
@@ -136,18 +134,18 @@
       <div id="controls">
         <b>Filtra per:</b><br />
         <label>🏛 Circoscrizione:</label><br />
-        <select id="select-circoscrizione"></select><br />
+        <select id="select-circoscrizione" aria-label="Seleziona una circoscrizione"></select><br />
         <label>🏫 Sede:</label><br />
-        <select id="select-sede" disabled></select><br />
+        <select id="select-sede" disabled aria-label="Seleziona una sede di voto" ></select><br />
         <label>🗳 Sezione:</label><br />
-        <select id="select-sezione" disabled></select><br />
-        <button id="reset-button">Reset filtri</button><br />
-        <button id="fit-button">🗺️ Inquadra tutto</button>
+        <select id="select-sezione" disabled aria-label="Seleziona una sezione elettorale"></select><br />
+        <button id="reset-button" aria-label="Resetta tutti i filtri">Reset filtri</button><br/>
+        <button id="fit-button" aria-label="Inquadra l’intera mappa">🗺️ Inquadra tutto</button>
         <br />
         <div id="status" style="margin-top:5px;color:#555;"></div>
       </div>
       <div id="legend"></div>
-      <div id="tooltip"></div>
+      <div id="tooltip" role="tooltip"></div>
     </main>
     <footer class="footer-custom text-light text-start px-3 py-2 fixed-bottom">
       <small>&copy; Open Data del Comune di Trento - Mappa: OpenFreeMap &copy; OpenMapTiles Data from <A
@@ -527,15 +525,28 @@
 
         map.once("idle", () => {
           document.getElementById("loading").style.display = "none";
-          allFeatures = map.queryRenderedFeatures({ layers: ["sezioni_elettorali_layer"] });
-          allFeatures.forEach(f => {
-            const { circoscrizione } = f.properties;
-            if (!coloriCircoscrizioni[circoscrizione]) coloriCircoscrizioni[circoscrizione] = generaColore();
-          });
-          const circoscrizioni = [...new Set(allFeatures.map(f => f.properties.circoscrizione))];
-          aggiornaSelect(selectC, circoscrizioni, false);
-          aggiornaLegenda();
-          aggiornaMappa(coloreCircoscrizioneExpr());
+
+          // Forza un fit su tutti i bounds per far renderizzare le tile
+          map.fitBounds(fullBounds, { padding: 40 });
+
+          // Aspetta un po' per assicurarti che le tile siano renderizzate
+          setTimeout(() => {
+            allFeatures = map.queryRenderedFeatures({ layers: ["sezioni_elettorali_layer"] });
+
+            if (allFeatures.length === 0) {
+              console.warn("⚠️ Nessuna feature visibile, potresti essere troppo zoomato o fuori dalla zona.");
+            }
+
+            allFeatures.forEach(f => {
+              const { circoscrizione } = f.properties;
+              if (!coloriCircoscrizioni[circoscrizione]) coloriCircoscrizioni[circoscrizione] = generaColore();
+            });
+
+            const circoscrizioni = [...new Set(allFeatures.map(f => f.properties.circoscrizione))];
+            aggiornaSelect(selectC, circoscrizioni, false);
+            aggiornaLegenda();
+            aggiornaMappa(coloreCircoscrizioneExpr());
+          }, 500); // mezzo secondo per garantire rendering
         });
       });
 
