@@ -10,7 +10,8 @@ where: Largo Carducci 45, Trento
 organizers: Insieme per Trento
 intro: 
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://insiemepertrento.it/" # the base hostname & protocol for your site, e.g. http://example.com
+#url: "https://insiemepertrento.it/" # the base hostname & protocol for your site, e.g. http://example.com
+url: ""
 twitter_username: insiemepertrento
 github_username:  insiemepertrento
 facebook: insiemepertrento
